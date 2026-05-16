@@ -1,0 +1,27 @@
+{
+  "skill": "asg-strategic-filter",
+  "skill_version": "0.1.0",
+  "note": "v0.1 acceptance cases from plan §9.2. Run = feed input, assert output matches expect (allow score tolerance ±1 per dimension).",
+  "cases": [
+    {
+      "name": "should GO + pillar",
+      "input": { "topic": "private agent dropshipping for jewelry", "target_market": "US" },
+      "expect": { "decision": "GO", "recommended_article_type": "pillar", "cluster": "jewelry" }
+    },
+    {
+      "name": "should MODIFY (too broad)",
+      "input": { "topic": "dropshipping", "target_market": "UK" },
+      "expect": { "decision": "MODIFY", "modify_suggestion_present": true }
+    },
+    {
+      "name": "should KILL (low intent + risk)",
+      "input": { "topic": "free dropshipping suppliers", "target_market": "UK" },
+      "expect": { "decision": "KILL", "alternative_present": true, "risk_flags_nonempty": true }
+    },
+    {
+      "name": "should KILL (duplicate of #37)",
+      "input": { "topic": "uk supplier testing protocol", "target_market": "UK" },
+      "expect": { "decision": "KILL", "duplicate_of": "#37" }
+    }
+  ]
+}

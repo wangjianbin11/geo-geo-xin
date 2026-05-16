@@ -1,0 +1,26 @@
+{
+  "skill": "asg-geo-benchmarker",
+  "skill_version": "0.1.0",
+  "note": "v0.1 acceptance from plan §11.3.",
+  "cases": [
+    {
+      "name": "weekly teardown produces actionable proposals",
+      "input": {
+        "target_keywords": ["uk dropshipping suppliers", "dropshipping agent"],
+        "competitor_urls": ["https://example-competitor.com/a", "https://example-competitor.com/b"],
+        "ai_citation_evidence": [{ "url": "https://example-competitor.com/a", "engine": "perplexity", "cited": true, "cited_section_note": "answer capsule paragraph" }],
+        "week": "2026-W21"
+      },
+      "expect": {
+        "rulebook_revision_proposals_nonempty": true,
+        "every_proposal_has": ["target_doc", "section", "change"],
+        "report_path_pattern": "COMP-2026-W21"
+      }
+    },
+    {
+      "name": "article_id follows benchmarker pattern",
+      "input": { "target_keywords": ["x"], "competitor_urls": ["https://x.com"], "week": "2026-W22" },
+      "expect": { "article_id_pattern": "^ASG-BM-2026W22$" }
+    }
+  ]
+}

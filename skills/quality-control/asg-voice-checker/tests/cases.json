@@ -1,0 +1,27 @@
+{
+  "skill": "asg-voice-checker",
+  "skill_version": "0.1.0",
+  "note": "v0.1 acceptance from plan §9.6.",
+  "cases": [
+    {
+      "name": "clean Janson voice PASS",
+      "input": { "article_type": "response", "language": "en-GB", "html": "<p>I've watched hundreds of stores get this wrong. After 8 years of fulfilment, we route UK parcels differently. Here's the thing: the cost is in the split.</p>" },
+      "expect": { "decision": "PASS" }
+    },
+    {
+      "name": "neutral-expert drift FLAG",
+      "input": { "article_type": "response", "language": "en-GB", "html": "<p>It is generally recommended that suppliers be evaluated carefully. A variety of factors should be considered when decisions are made.</p>" },
+      "expect": { "decision": "FLAG", "flag_checks_include": ["first_person_density", "neutral_expert_drift"] }
+    },
+    {
+      "name": "locale mismatch FLAG (UK article, US spelling)",
+      "input": { "article_type": "pillar", "language": "en-GB", "html": "<p>We optimize jewelry fulfillment and color matching across our warehouses.</p>" },
+      "expect": { "decision": "FLAG", "flag_checks_include": ["locale_consistency"], "offending_terms": ["optimize", "jewelry", "fulfillment", "color"] }
+    },
+    {
+      "name": "AI trace FLAG (banned phrases)",
+      "input": { "article_type": "share", "language": "en-US", "html": "<p>In today's rapidly evolving world of dropshipping, let's dive in. In conclusion, this is a game-changer.</p>" },
+      "expect": { "decision": "FLAG", "flag_checks_include": ["ai_trace_scan"] }
+    }
+  ]
+}

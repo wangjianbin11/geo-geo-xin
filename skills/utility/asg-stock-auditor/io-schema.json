@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://asg-content-os/skills/asg-stock-auditor/io-schema.json",
+  "title": "asg-stock-auditor I/O contract",
+  "allOf": [{ "$ref": "https://asg-content-os/schemas/envelope.schema.json" }],
+  "properties": {
+    "skill": { "const": "asg-stock-auditor" },
+    "article_id": { "type": "string", "pattern": "^ASG-AUDIT-[0-9]{3,}$", "description": "Override: auditor uses audit task id, e.g. ASG-AUDIT-001" },
+    "input": {
+      "type": "object",
+      "required": ["articles"],
+      "additionalProperties": false,
+      "properties": {
+        "articles": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["ref", "url", "primary_kw"],
+            "properties": {
+              "ref": { "type": "string", "description": "e.g. #37" },
+              "url": { "type": "string", "format": "uri" },
+              "primary_kw": { "type": "string" }
+            }
+          }
+        },
+        "gsc_data": { "type": ["object", "null"], "description": "{ '#37': {clicks,impressions,position} }" },
+        "ahrefs_data": { "type": ["object", "null"] },
+        "ai_citation_manual": { "type": "array", "items": { "type": "object", "properties": { "ref": { "type": "string" }, "cited": { "type": "boolean" }, "engine": { "type": "string" } } } },
+        "inquiry_attribution": { "type": "array", "items": { "type": "string", "description": "article refs that produced inquiries" } }
+      }
+    },
+    "output": {
+      "type": "object",
+      "required": ["mode", "audited", "insights", "csv_path"],
+      "additionalProperties": false,
+      "properties": {
+        "mode": { "type": "string", "enum": ["full", "basic"] },
+        "audited": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["ref", "recommendation", "priority"],
+            "properties": {
+              "ref": { "type": "string" },
+              "rank": { "type": ["integer", "null"] },
+              "featured_snippet": { "type": ["boolean", "null"] },
+              "ai_cited": { "type": ["boolean", "null"] },
+              "inquiry": { "type": "boolean", "default": false },
+              "recommendation": { "type": "string", "enum": ["KEEP", "UPGRADE", "REWRITE", "KILL"] },
+              "priority": { "type": "string", "enum": ["P0", "P1", "P2", "P3"] },
+              "cluster": { "type": ["string", "null"] }
+            }
+          }
+        },
+        "insights": {
+          "type": "object",
+          "required": ["top5_traits", "bottom5_traits", "topic_gaps"],
+          "properties": {
+            "top5_traits": { "type": "array", "items": { "type": "string" } },
+            "bottom5_traits": { "type": "array", "items": { "type": "string" } },
+            "topic_gaps": { "type": "array", "items": { "type": "string" } }
+          }
+        },
+        "csv_path": { "type": "string", "const": "data/articles-stock-audit.csv" }
+      }
+    }
+  }
+}

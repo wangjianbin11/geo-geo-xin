@@ -1,0 +1,46 @@
+{
+  "skill": "asg-seo-writer-v2",
+  "skill_version": "0.1.0",
+  "note": "v0.1 minimal-path checks. Full validation = the #44 article end-to-end run (plan §9.4).",
+  "cases": [
+    {
+      "name": "pillar draft minimal path",
+      "input": {
+        "phase": "draft",
+        "article_type": "pillar",
+        "filter_report": { "decision": "GO", "recommended_article_type": "pillar", "cluster": "UK" },
+        "keyword_spec": { "primary_keyword": { "term": "uk dropshipping suppliers" }, "cluster_relations": { "cluster": "UK", "internal_link_recommendations": ["#37", "#42", "#43"] } },
+        "performance_ref": null
+      },
+      "expect": {
+        "draft.schema_blocks_superset_of": ["Article", "FAQPage", "BreadcrumbList"],
+        "draft.title_options_min": 5,
+        "every_asg_data_ref_has_id": true,
+        "internal_links_from_cluster_map": true,
+        "title_options.ctr_reference_when_no_history": "no-history"
+      }
+    },
+    {
+      "name": "response draft minimal path (compressed)",
+      "input": {
+        "phase": "draft",
+        "article_type": "response",
+        "filter_report": { "decision": "GO", "recommended_article_type": "response", "cluster": null },
+        "keyword_spec": { "primary_keyword": { "term": "what is a dropshipping agent" }, "cluster_relations": { "cluster": null, "internal_link_recommendations": ["#1"] } },
+        "performance_ref": null
+      },
+      "expect": { "draft.schema_blocks_superset_of": ["Article", "FAQPage", "BreadcrumbList"], "word_count_band": "1200-2000" }
+    },
+    {
+      "name": "meta phase",
+      "input": {
+        "phase": "meta",
+        "article_type": "pillar",
+        "filter_report": { "decision": "GO" },
+        "keyword_spec": { "primary_keyword": { "term": "uk dropshipping suppliers" } },
+        "performance_ref": null
+      },
+      "expect": { "meta_variants_min": 3, "meta_max_len": 160 }
+    }
+  ]
+}

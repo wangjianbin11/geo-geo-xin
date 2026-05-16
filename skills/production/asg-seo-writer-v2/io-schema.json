@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://asg-content-os/skills/asg-seo-writer-v2/io-schema.json",
+  "title": "asg-seo-writer-v2 I/O contract",
+  "allOf": [{ "$ref": "https://asg-content-os/schemas/envelope.schema.json" }],
+  "properties": {
+    "skill": { "const": "asg-seo-writer-v2" },
+    "input": {
+      "type": "object",
+      "required": ["phase", "keyword_spec", "filter_report", "article_type"],
+      "additionalProperties": false,
+      "properties": {
+        "phase": { "type": "string", "enum": ["draft", "meta"] },
+        "keyword_spec": { "type": "object" },
+        "filter_report": { "type": "object" },
+        "article_type": { "type": "string", "enum": ["pillar", "share", "response"] },
+        "performance_ref": { "type": ["object", "null"], "description": "Historical CTR patterns; null -> mark no-history" }
+      }
+    },
+    "output": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "draft": {
+          "type": ["object", "null"],
+          "required": ["html", "rank_math_settings", "asset_manifest", "h2_blocks", "schema_blocks", "title_options"],
+          "properties": {
+            "html": { "type": "string" },
+            "rank_math_settings": { "type": "object" },
+            "asset_manifest": {
+              "type": "object",
+              "properties": {
+                "internal_links": { "type": "array", "items": { "type": "string" } },
+                "external_links": { "type": "array", "items": { "type": "string" } },
+                "asg_data_refs": { "type": "array", "items": { "type": "string", "pattern": "^(FACT|CASE)-[A-Za-z0-9-]+$" } }
+              }
+            },
+            "h2_blocks": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": ["heading", "library_refs", "has_answer_block", "has_key_takeaway"],
+                "properties": {
+                  "heading": { "type": "string" },
+                  "library_refs": { "type": "array", "items": { "type": "string", "pattern": "^(FACT|CASE|SOURCE|VOICE)-[A-Za-z0-9-]+$" } },
+                  "has_answer_block": { "type": "boolean" },
+                  "has_key_takeaway": { "type": "boolean" }
+                }
+              }
+            },
+            "schema_blocks": { "type": "array", "items": { "type": "string", "enum": ["Article", "FAQPage", "BreadcrumbList", "HowTo", "ItemList"] } },
+            "title_options": {
+              "type": "array",
+              "minItems": 5,
+              "items": {
+                "type": "object",
+                "properties": { "title": { "type": "string" }, "ctr_reference": { "type": "string" } }
+              }
+            }
+          }
+        },
+        "meta_variants": {
+          "type": ["array", "null"],
+          "minItems": 3,
+          "items": { "type": "object", "properties": { "meta": { "type": "string", "maxLength": 160 }, "ctr_reference": { "type": "string" } } }
+        }
+      }
+    }
+  }
+}

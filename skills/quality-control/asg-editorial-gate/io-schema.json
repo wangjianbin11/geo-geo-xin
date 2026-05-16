@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://asg-content-os/skills/asg-editorial-gate/io-schema.json",
+  "title": "asg-editorial-gate I/O contract",
+  "allOf": [{ "$ref": "https://asg-content-os/schemas/envelope.schema.json" }],
+  "$defs": {
+    "article_type_params": {
+      "description": "MIRROR of asg-publishing-gate.md §A. Values MUST match §A; on conflict §A wins and this is fixed.",
+      "pillar": { "word_count": [3000, 5000], "h2_count": [6, 7], "internal_links": 4, "external_links": 10, "primary_kw_density": [1.0, 1.5], "cooccur_density": [0.5, 1.0], "asg_data_refs": 9, "case_refs": 2, "schema": ["Article", "FAQPage", "BreadcrumbList", "HowTo|ItemList"] },
+      "share": { "word_count": [2000, 3000], "h2_count": [5, 6], "internal_links": 3, "external_links": 8, "primary_kw_density": [1.0, 2.0], "cooccur_density": [0.5, 0.5], "asg_data_refs": 5, "case_refs": 1, "schema": ["Article", "FAQPage", "BreadcrumbList", "ItemList"] },
+      "response": { "word_count": [1200, 2000], "h2_count": [3, 4], "internal_links": 2, "external_links": 5, "primary_kw_density": [1.5, 2.0], "cooccur_density": [0.3, 0.3], "asg_data_refs": 3, "case_refs": 1, "schema": ["Article", "FAQPage", "BreadcrumbList"] }
+    },
+    "v0_1_tolerance": { "gate2_density_pct": [0.3, 0.7], "gate10_similarity_pct": 40 }
+  },
+  "properties": {
+    "skill": { "const": "asg-editorial-gate" },
+    "input": {
+      "type": "object",
+      "required": ["draft", "article_type", "keyword_spec"],
+      "additionalProperties": false,
+      "properties": {
+        "draft": { "type": "object" },
+        "article_type": { "type": "string", "enum": ["pillar", "share", "response"] },
+        "keyword_spec": { "type": "object" },
+        "stock_set_ref": { "type": ["string", "null"], "description": "Path to retained 43-article set for Gate 10 dedup" }
+      }
+    },
+    "output": {
+      "type": "object",
+      "required": ["checks", "decision"],
+      "additionalProperties": false,
+      "properties": {
+        "checks": {
+          "type": "array",
+          "minItems": 10,
+          "maxItems": 10,
+          "items": {
+            "type": "object",
+            "required": ["id", "name", "result"],
+            "properties": {
+              "id": { "type": "integer", "minimum": 1, "maximum": 10 },
+              "name": { "type": "string" },
+              "result": { "type": "string", "enum": ["PASS", "MODIFY", "BLOCK", "FLAG"] },
+              "detail": { "type": "string" }
+            }
+          }
+        },
+        "decision": { "type": "string", "enum": ["PASS", "MODIFY", "BLOCK"] },
+        "modify_list": { "type": "array", "items": { "type": "string" }, "default": [] },
+        "block_reasons": { "type": "array", "items": { "type": "string" }, "default": [] },
+        "auto_fix_attempted": { "type": "boolean", "default": false },
+        "attempt": { "type": "integer", "minimum": 1, "default": 1 }
+      }
+    }
+  }
+}

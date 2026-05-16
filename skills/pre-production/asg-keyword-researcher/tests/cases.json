@@ -1,0 +1,36 @@
+{
+  "skill": "asg-keyword-researcher",
+  "skill_version": "0.1.0",
+  "note": "v0.1 acceptance from plan §9.3 + degraded-mode case (risk-① mitigation).",
+  "cases": [
+    {
+      "name": "pillar with external data",
+      "input": {
+        "filter_report": { "decision": "GO", "recommended_article_type": "pillar", "cluster": "UK" },
+        "external_data": { "primary_candidates": [{ "term": "uk dropshipping suppliers", "kd": 28, "volume": 1900, "cpc": 3.4, "intent": "commercial" }], "cooccurrence": ["sourcing agent", "fulfilment", "lead time", "DDP", "VAT", "supplier vetting"] }
+      },
+      "expect": { "mode": "full", "density_plan.article_type": "pillar", "density_plan.primary_kw_density": "1.0-1.5%" }
+    },
+    {
+      "name": "share placement",
+      "input": {
+        "filter_report": { "decision": "GO", "recommended_article_type": "share", "cluster": null },
+        "external_data": { "primary_candidates": [{ "term": "best dropshipping agents 2026", "kd": 34, "volume": 2400, "cpc": 4.1, "intent": "commercial" }], "cooccurrence": ["pricing", "review", "vs", "fees", "support"] }
+      },
+      "expect": { "mode": "full", "density_plan.article_type": "share" }
+    },
+    {
+      "name": "cluster recognition",
+      "input": {
+        "filter_report": { "decision": "GO", "recommended_article_type": "pillar", "cluster": "UK" },
+        "external_data": { "primary_candidates": [{ "term": "uk dropshipping vat", "kd": 22, "volume": 880, "cpc": 2.9, "intent": "informational" }] }
+      },
+      "expect": { "cluster_relations.cluster": "UK", "cluster_relations.internal_link_recommendations_includes": ["#37", "#42", "#43"] }
+    },
+    {
+      "name": "degraded mode (no external data)",
+      "input": { "filter_report": { "decision": "GO", "recommended_article_type": "response", "cluster": null }, "external_data": null },
+      "expect": { "mode": "degraded", "envelope.status": "flagged", "primary_keyword.estimated": true }
+    }
+  ]
+}

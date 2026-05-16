@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://asg-content-os/skills/asg-geo-benchmarker/io-schema.json",
+  "title": "asg-geo-benchmarker I/O contract",
+  "allOf": [{ "$ref": "https://asg-content-os/schemas/envelope.schema.json" }],
+  "properties": {
+    "skill": { "const": "asg-geo-benchmarker" },
+    "article_id": { "type": "string", "pattern": "^ASG-BM-[0-9]{4}W[0-9]{1,2}$", "description": "Override: benchmarker uses week task id, e.g. ASG-BM-2026W21" },
+    "input": {
+      "type": "object",
+      "required": ["target_keywords", "competitor_urls"],
+      "additionalProperties": false,
+      "properties": {
+        "target_keywords": { "type": "array", "minItems": 1, "maxItems": 5, "items": { "type": "string" } },
+        "competitor_urls": { "type": "array", "minItems": 1, "maxItems": 10, "items": { "type": "string", "format": "uri" } },
+        "ai_citation_evidence": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "url": { "type": "string", "format": "uri" },
+              "engine": { "type": "string", "enum": ["perplexity", "google-ai-overview", "other"] },
+              "cited": { "type": "boolean" },
+              "cited_section_note": { "type": "string" }
+            }
+          }
+        },
+        "week": { "type": "string", "pattern": "^[0-9]{4}-W[0-9]{1,2}$" }
+      }
+    },
+    "output": {
+      "type": "object",
+      "required": ["teardowns", "patterns", "rulebook_revision_proposals", "report_path"],
+      "additionalProperties": false,
+      "properties": {
+        "teardowns": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "url": { "type": "string" },
+              "geo_structure": { "type": "object" },
+              "ai_cited": { "type": "boolean" },
+              "seo_signals": { "type": "object" },
+              "voice_value": { "type": "object" }
+            }
+          }
+        },
+        "patterns": {
+          "type": "object",
+          "required": ["ai_loved", "asg_wasted", "opportunities"],
+          "properties": {
+            "ai_loved": { "type": "array", "items": { "type": "string" } },
+            "asg_wasted": { "type": "array", "items": { "type": "string" } },
+            "opportunities": { "type": "array", "items": { "type": "string" } }
+          }
+        },
+        "rulebook_revision_proposals": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["target_doc", "section", "change"],
+            "properties": {
+              "target_doc": { "type": "string", "enum": ["asg-geo-standards", "asg-publishing-gate", "asg-voice-bible"] },
+              "section": { "type": "string" },
+              "change": { "type": "string" },
+              "evidence": { "type": "string" }
+            }
+          }
+        },
+        "report_path": { "type": "string", "description": "e.g. obsidian:/10-竞品情报库/COMP-2026-W21.md" }
+      }
+    }
+  }
+}

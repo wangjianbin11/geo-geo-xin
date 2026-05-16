@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://asg-content-os/skills/asg-strategic-filter/io-schema.json",
+  "title": "asg-strategic-filter I/O contract",
+  "allOf": [{ "$ref": "https://asg-content-os/schemas/envelope.schema.json" }],
+  "properties": {
+    "skill": { "const": "asg-strategic-filter" },
+    "input": {
+      "type": "object",
+      "required": ["topic"],
+      "additionalProperties": false,
+      "properties": {
+        "topic": { "type": "string", "minLength": 1 },
+        "candidates": { "type": "array", "items": { "type": "string" }, "default": [] },
+        "target_market": { "type": "string", "enum": ["UK", "US", "other"], "default": "UK" }
+      }
+    },
+    "output": {
+      "type": "object",
+      "required": ["scores", "total", "decision", "recommended_article_type"],
+      "additionalProperties": false,
+      "properties": {
+        "scores": {
+          "type": "object",
+          "required": ["search_intent", "asg_relevance", "journey_position", "cluster_fit", "asg_data_support", "duplication_risk"],
+          "additionalProperties": false,
+          "properties": {
+            "search_intent": { "type": "integer", "minimum": 0, "maximum": 10 },
+            "asg_relevance": { "type": "integer", "minimum": 0, "maximum": 10 },
+            "journey_position": { "type": "integer", "minimum": 0, "maximum": 10 },
+            "cluster_fit": { "type": "integer", "minimum": 0, "maximum": 10 },
+            "asg_data_support": { "type": "integer", "minimum": 0, "maximum": 10 },
+            "duplication_risk": { "type": "integer", "minimum": 0, "maximum": 10 }
+          }
+        },
+        "total": { "type": "integer", "minimum": 0, "maximum": 60 },
+        "decision": { "type": "string", "enum": ["GO", "MODIFY", "KILL"] },
+        "recommended_article_type": { "type": "string", "enum": ["pillar", "share", "response"] },
+        "type_reason": { "type": "string" },
+        "cluster": { "type": ["string", "null"] },
+        "priority": { "type": "string", "enum": ["P0", "P1", "P2"] },
+        "risk_flags": { "type": "array", "items": { "type": "string" }, "default": [] },
+        "modify_suggestion": { "type": ["string", "null"], "default": null },
+        "alternative": { "type": ["string", "null"], "default": null },
+        "duplicate_of": { "type": ["string", "null"], "description": "Article ref if KILL due to duplication, e.g. #37", "default": null }
+      }
+    }
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://asg-content-os/skills/asg-voice-checker/io-schema.json",
+  "title": "asg-voice-checker I/O contract",
+  "allOf": [{ "$ref": "https://asg-content-os/schemas/envelope.schema.json" }],
+  "properties": {
+    "skill": { "const": "asg-voice-checker" },
+    "input": {
+      "type": "object",
+      "required": ["html", "article_type", "language"],
+      "additionalProperties": false,
+      "properties": {
+        "html": { "type": "string", "minLength": 1 },
+        "article_type": { "type": "string", "enum": ["pillar", "share", "response"] },
+        "language": { "type": "string", "enum": ["en-GB", "en-US"] }
+      }
+    },
+    "output": {
+      "type": "object",
+      "required": ["checks", "decision"],
+      "additionalProperties": false,
+      "properties": {
+        "checks": {
+          "type": "array",
+          "minItems": 5,
+          "maxItems": 5,
+          "items": {
+            "type": "object",
+            "required": ["id", "name", "result"],
+            "properties": {
+              "id": { "type": "integer", "minimum": 1, "maximum": 5 },
+              "name": { "type": "string", "enum": ["first_person_density", "experience_anchors", "neutral_expert_drift", "ai_trace_scan", "locale_consistency"] },
+              "result": { "type": "string", "enum": ["PASS", "FLAG"] },
+              "offending": { "type": "array", "items": { "type": "object", "properties": { "snippet": { "type": "string" }, "rewrite_hint": { "type": "string" } } } }
+            }
+          }
+        },
+        "decision": { "type": "string", "enum": ["PASS", "FLAG"] }
+      }
+    }
+  }
+}

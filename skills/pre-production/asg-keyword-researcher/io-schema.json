@@ -1,0 +1,99 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://asg-content-os/skills/asg-keyword-researcher/io-schema.json",
+  "title": "asg-keyword-researcher I/O contract",
+  "allOf": [{ "$ref": "https://asg-content-os/schemas/envelope.schema.json" }],
+  "properties": {
+    "skill": { "const": "asg-keyword-researcher" },
+    "input": {
+      "type": "object",
+      "required": ["filter_report"],
+      "additionalProperties": false,
+      "properties": {
+        "filter_report": { "type": "object", "description": "dossier.filter_report from asg-strategic-filter" },
+        "external_data": {
+          "type": ["object", "null"],
+          "description": "Janson-supplied data from external KW tools. Null/partial -> degraded mode.",
+          "additionalProperties": false,
+          "properties": {
+            "primary_candidates": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": ["term"],
+                "properties": {
+                  "term": { "type": "string" },
+                  "kd": { "type": ["number", "null"] },
+                  "volume": { "type": ["integer", "null"] },
+                  "cpc": { "type": ["number", "null"] },
+                  "intent": { "type": ["string", "null"], "enum": ["informational", "commercial", "transactional", "navigational", null] }
+                }
+              }
+            },
+            "long_tail": { "type": "array", "items": { "type": "object" } },
+            "cooccurrence": { "type": "array", "items": { "type": "string" } },
+            "competitor_urls": { "type": "array", "items": { "type": "string", "format": "uri" } }
+          }
+        }
+      }
+    },
+    "output": {
+      "type": "object",
+      "required": ["mode", "primary_keyword", "density_plan", "seo_placement", "geo_placement", "cooccurrence_terms", "cluster_relations"],
+      "additionalProperties": false,
+      "properties": {
+        "mode": { "type": "string", "enum": ["full", "degraded"] },
+        "primary_keyword": {
+          "type": "object",
+          "required": ["term", "priority", "pool_status"],
+          "properties": {
+            "term": { "type": "string" },
+            "priority": { "type": "integer", "minimum": 0, "maximum": 100 },
+            "pool_status": { "type": "string", "enum": ["new", "observed", "already-active", "already-retired"] },
+            "kd": { "type": ["number", "null"] },
+            "volume": { "type": ["integer", "null"] },
+            "cpc": { "type": ["number", "null"] },
+            "intent": { "type": ["string", "null"] },
+            "estimated": { "type": "boolean", "default": false }
+          }
+        },
+        "density_plan": {
+          "type": "object",
+          "description": "Pulled from asg-publishing-gate.md §A by dossier.article_type. Do not hardcode.",
+          "required": ["article_type", "primary_kw_density", "cooccur_density"],
+          "properties": {
+            "article_type": { "type": "string", "enum": ["pillar", "share", "response"] },
+            "primary_kw_density": { "type": "string" },
+            "cooccur_density": { "type": "string" }
+          }
+        },
+        "seo_placement": { "type": "array", "items": { "type": "string" } },
+        "geo_placement": { "type": "array", "items": { "type": "string" } },
+        "cooccurrence_terms": { "type": "array", "items": { "type": "string" }, "minItems": 0 },
+        "selected_keywords": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "term": { "type": "string" },
+              "kd": { "type": ["number", "null"] },
+              "volume": { "type": ["integer", "null"] },
+              "cpc": { "type": ["number", "null"] },
+              "intent": { "type": ["string", "null"] },
+              "estimated": { "type": "boolean", "default": false }
+            }
+          }
+        },
+        "cluster_relations": {
+          "type": "object",
+          "required": ["cluster", "internal_link_recommendations", "future_expansion"],
+          "properties": {
+            "cluster": { "type": ["string", "null"] },
+            "internal_link_recommendations": { "type": "array", "items": { "type": "string" }, "description": "Existing article refs for bidirectional links, e.g. #37" },
+            "future_expansion": { "type": "array", "items": { "type": "string" } }
+          }
+        }
+      }
+    }
+  }
+}

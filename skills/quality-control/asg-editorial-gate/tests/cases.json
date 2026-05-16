@@ -1,0 +1,47 @@
+{
+  "skill": "asg-editorial-gate",
+  "skill_version": "0.1.0",
+  "note": "v0.1 acceptance from plan §9.5. Gate must prove it bites (not a rubber stamp).",
+  "cases": [
+    {
+      "name": "must BLOCK on missing Library ID (Gate 6 hard fail)",
+      "input": {
+        "article_type": "pillar",
+        "keyword_spec": { "mode": "full" },
+        "draft": { "asset_manifest": { "asg_data_refs": [] }, "html": "...ASG runs a 200-person QC team and a 0.3% defect rate...", "schema_blocks": ["Article", "FAQPage", "BreadcrumbList", "HowTo"], "h2_blocks": [] }
+      },
+      "expect": { "decision": "BLOCK", "block_reasons_mentions": "Gate 6", "check6_result": "BLOCK" }
+    },
+    {
+      "name": "must BLOCK on missing core Schema",
+      "input": {
+        "article_type": "pillar",
+        "keyword_spec": { "mode": "full" },
+        "draft": { "asset_manifest": { "asg_data_refs": ["FACT-001"] }, "schema_blocks": ["Article"], "h2_blocks": [] }
+      },
+      "expect": { "decision": "BLOCK", "check4_result": "BLOCK" }
+    },
+    {
+      "name": "clean pillar should PASS",
+      "input": {
+        "article_type": "pillar",
+        "keyword_spec": { "mode": "full", "cooccurrence_terms": [] },
+        "draft": {
+          "asset_manifest": { "internal_links": ["#37", "#42", "#43", "#1"], "external_links": ["SOURCE-001", "SOURCE-002", "SOURCE-003", "SOURCE-010", "SOURCE-011", "SOURCE-020", "SOURCE-030", "SOURCE-001", "SOURCE-002", "SOURCE-003"], "asg_data_refs": ["FACT-001", "FACT-002", "FACT-010", "FACT-011", "FACT-020", "FACT-021", "FACT-040", "FACT-041", "FACT-042", "CASE-007", "CASE-001"] },
+          "schema_blocks": ["Article", "FAQPage", "BreadcrumbList", "HowTo"],
+          "h2_blocks": [{ "heading": "x", "library_refs": ["FACT-001"], "has_answer_block": true, "has_key_takeaway": true }]
+        }
+      },
+      "expect": { "decision": "PASS" }
+    },
+    {
+      "name": "degraded keyword data downgrades density gates to FLAG",
+      "input": {
+        "article_type": "response",
+        "keyword_spec": { "mode": "degraded" },
+        "draft": { "asset_manifest": { "asg_data_refs": ["FACT-040"] }, "schema_blocks": ["Article", "FAQPage", "BreadcrumbList"], "h2_blocks": [{ "heading": "x", "library_refs": ["FACT-040"], "has_answer_block": true, "has_key_takeaway": true }] }
+      },
+      "expect": { "check2_result": "FLAG", "audit_warning_mentions": "estimated" }
+    }
+  ]
+}

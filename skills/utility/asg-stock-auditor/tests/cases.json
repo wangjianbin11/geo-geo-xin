@@ -1,0 +1,33 @@
+{
+  "skill": "asg-stock-auditor",
+  "skill_version": "0.1.0",
+  "note": "v0.1 acceptance: 3 mock articles covering KEEP/UPGRADE/KILL + basic-mode (no GSC).",
+  "cases": [
+    {
+      "name": "full mode with GSC",
+      "input": {
+        "articles": [
+          { "ref": "#37", "url": "https://asg.example/uk-supplier-testing", "primary_kw": "uk supplier testing protocol" },
+          { "ref": "#5", "url": "https://asg.example/old-2024", "primary_kw": "aliexpress dropshipping 2024" },
+          { "ref": "#42", "url": "https://asg.example/uk-supplier-pricing", "primary_kw": "uk dropshipping suppliers" }
+        ],
+        "gsc_data": { "#37": { "clicks": 120, "impressions": 4000, "position": 6 }, "#5": { "clicks": 1, "impressions": 90, "position": 71 }, "#42": { "clicks": 40, "impressions": 1500, "position": 14 } },
+        "ai_citation_manual": [{ "ref": "#37", "cited": true, "engine": "perplexity" }],
+        "inquiry_attribution": ["#37"]
+      },
+      "expect": {
+        "mode": "full",
+        "rec_#37": "KEEP",
+        "rec_#5": "KILL",
+        "rec_#42": "UPGRADE",
+        "csv_path": "data/articles-stock-audit.csv",
+        "all_articles_covered": true
+      }
+    },
+    {
+      "name": "basic mode (no GSC) does not error",
+      "input": { "articles": [{ "ref": "#1", "url": "https://asg.example/agent", "primary_kw": "dropshipping agent" }], "gsc_data": null },
+      "expect": { "mode": "basic", "all_articles_covered": true }
+    }
+  ]
+}
