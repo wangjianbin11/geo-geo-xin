@@ -76,7 +76,7 @@
       "description": "Union of all Library IDs referenced anywhere in this dossier. Editorial Gate cross-checks.",
       "items": {
         "type": "string",
-        "pattern": "^(FACT|CASE|SOURCE|VOICE|TOPIC)-[A-Za-z0-9-]+$"
+        "pattern": "^(ASG-[A-Z]+-[0-9]{3,}|(FACT|CASE|SOURCE|VOICE|TOPIC)-[A-Za-z0-9-]+)$"
       },
       "default": []
     },

@@ -36,15 +36,17 @@ def library_ids():
     ids = set()
     for jp in glob.glob(os.path.join(ROOT, "libraries", "**", "*.json"), recursive=True):
         data = json.load(open(jp, encoding="utf-8"))
-        for key in ("facts", "cases", "sources", "voices", "topics"):
+        for key in ("facts", "cases", "sources", "voices", "topics",
+                    "data_points"):
             for row in data.get(key, []):
-                if "id" in row:
+                if isinstance(row, dict) and "id" in row:
                     ids.add(row["id"])
     return ids
 
 
 LIB_IDS = library_ids()
-REF_RE = re.compile(r"^(FACT|CASE|SOURCE|VOICE|TOPIC)-[A-Za-z0-9-]+$")
+REF_RE = re.compile(
+    r"^(ASG-[A-Z]+-[0-9]{3,}|(FACT|CASE|SOURCE|VOICE|TOPIC)-[A-Za-z0-9-]+)$")
 SEMVER_RE = re.compile(r"^\d+\.\d+\.\d+$")
 ART_RE = re.compile(r"^ASG-(\d{3,}|BM-\d{4}W\d{1,2}|AUDIT-\d{3,}|MA-\d{4}-\d{2})$")
 ENV_REQUIRED = ["schema_version", "skill", "skill_version", "run_id",

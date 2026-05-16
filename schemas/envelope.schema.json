@@ -92,7 +92,7 @@
       "description": "Every Library data point referenced by this skill, by ID. Editorial Gate verifies these resolve.",
       "items": {
         "type": "string",
-        "pattern": "^(FACT|CASE|SOURCE|VOICE|TOPIC)-[A-Za-z0-9-]+$"
+        "pattern": "^(ASG-[A-Z]+-[0-9]{3,}|(FACT|CASE|SOURCE|VOICE|TOPIC)-[A-Za-z0-9-]+)$"
       }
     },
     "input": {
