@@ -77,7 +77,10 @@ asg-stock-auditor    ◀── 一次性触发   ──  产出 43 篇审计表 
 
 ```
 asg-content-constitution.md  (最高约束)
-   ├── asg-voice-bible.md        ← asg-seo-writer-v2 写作时 + asg-voice-checker 核查
-   ├── asg-publishing-gate.md    ← asg-editorial-gate 执行依据(含类型参数表 + 10 Gate)
-   └── (阶段2补) asg-risk-compliance.md / asg-geo-standards.md
+   ├── asg-voice-bible.md                       ← asg-seo-writer-v2 写作 + asg-voice-checker 核查
+   ├── asg-publishing-gate.md                   ← asg-editorial-gate 执行依据(类型参数表 SSoT + 10 Gate)
+   ├── asg-risk-compliance.md                   ← asg-editorial-gate Gate 9 + asg-strategic-filter 风险标注
+   ├── asg-geo-standards.md                     ← writer/gate 据此 + asg-geo-benchmarker 每周校准
+   └── asg-obsidian-knowledge-base-standards.md ← 双仓同步契约(asg-knowledge-vault)
 ```
+6 份规则文档全部 v0.1 落盘。

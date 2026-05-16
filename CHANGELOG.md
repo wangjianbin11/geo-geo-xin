@@ -8,7 +8,11 @@
 
 - `workflows/v2-development-plan.md` — 13 章完整设计方案落盘,含 0.5 节 n8n 演进预告。
 - `schemas/` — n8n 就绪的 JSON 流转契约:envelope / article-dossier / pipeline-contract。
-- `rulebooks/` — 3 份核心规则文档 v0.1:content-constitution / voice-bible / publishing-gate。
+- `rulebooks/` — 6 份规则文档 v0.1:content-constitution / voice-bible /
+  publishing-gate / risk-compliance / geo-standards / obsidian-knowledge-base-standards。
+- `data/runs/ASG-044/` — 主链端到端 mock 干跑(filter→keyword→draft→gate(BLOCK→fix→PASS)→meta→voice)。
+- `tools/validate_pipeline.py` — 零依赖 CI 式校验器:信封合规 + library_ref 解析 +
+  next_skill 链路 + 参数表跨文件一致性。260/260 全绿。
 - `libraries/` — 4 个 Library 结构 v0.1:facts / cases / sources / voices(ID 方案 + frontmatter + 引用计数 + .json 索引)。
 - `skills/` — 7 个 Skill v0.1(各含 SKILL.md + io-schema.json + tests/):
   strategic-filter / keyword-researcher / seo-writer-v2 / editorial-gate /
