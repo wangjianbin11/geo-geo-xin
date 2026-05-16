@@ -1,0 +1,101 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://asg-content-os/schemas/article-dossier.schema.json",
+  "title": "ASG Content OS v2 — Article Dossier",
+  "description": "The master object that accumulates as one article flows through the 28-step pipeline. Each skill writes its own section; later skills read earlier sections. Stored at data/runs/<article_id>/dossier.json. n8n note: this is the merged item that flows between nodes; each node sets its own section and passes the whole dossier on.",
+  "type": "object",
+  "required": ["article_id", "run_id", "topic", "article_type"],
+  "additionalProperties": false,
+  "properties": {
+    "article_id": { "type": "string", "pattern": "^ASG-[0-9]{3,}$" },
+    "run_id": { "type": "string", "minLength": 1 },
+    "created_at": { "type": "string", "format": "date-time" },
+    "updated_at": { "type": "string", "format": "date-time" },
+    "topic": {
+      "type": "string",
+      "description": "Raw topic as Janson proposed it.",
+      "minLength": 1
+    },
+    "article_type": {
+      "type": ["string", "null"],
+      "enum": ["pillar", "share", "response", null],
+      "description": "Set by asg-strategic-filter. null until Filter runs. Drives word count, H2 count, link counts, density across all downstream skills."
+    },
+    "language": {
+      "type": "string",
+      "enum": ["en-GB", "en-US"],
+      "description": "Language discipline. Set at Filter/Keyword stage by target market."
+    },
+    "cluster": {
+      "type": ["string", "null"],
+      "description": "Topical cluster this article belongs to or extends, e.g. UK Cluster.",
+      "default": null
+    },
+    "filter_report": {
+      "type": ["object", "null"],
+      "description": "Written by asg-strategic-filter. See skills/pre-production/asg-strategic-filter/io-schema.json#output.",
+      "default": null
+    },
+    "keyword_spec": {
+      "type": ["object", "null"],
+      "description": "Written by asg-keyword-researcher.",
+      "default": null
+    },
+    "draft": {
+      "type": ["object", "null"],
+      "description": "Written by asg-seo-writer-v2: html, rank_math_settings, asset_manifest, h2_blocks with library_refs.",
+      "default": null
+    },
+    "gate_report": {
+      "type": ["object", "null"],
+      "description": "Written by asg-editorial-gate: 10-check results + decision.",
+      "default": null
+    },
+    "voice_report": {
+      "type": ["object", "null"],
+      "description": "Written by asg-voice-checker: 5-check results + decision.",
+      "default": null
+    },
+    "publish_package": {
+      "type": ["object", "null"],
+      "description": "Step 23 packaging output (meta variants, slug, schema blocks).",
+      "default": null
+    },
+    "distribution": {
+      "type": ["object", "null"],
+      "description": "Step 24 platform adapter outputs (phase 3).",
+      "default": null
+    },
+    "performance": {
+      "type": ["object", "null"],
+      "description": "Step 25-27 feedback data, appended monthly.",
+      "default": null
+    },
+    "library_refs": {
+      "type": "array",
+      "description": "Union of all Library IDs referenced anywhere in this dossier. Editorial Gate cross-checks.",
+      "items": {
+        "type": "string",
+        "pattern": "^(FACT|CASE|SOURCE|VOICE|TOPIC)-[A-Za-z0-9-]+$"
+      },
+      "default": []
+    },
+    "history": {
+      "type": "array",
+      "description": "Append-only log of which skill touched the dossier when, for traceability.",
+      "items": {
+        "type": "object",
+        "required": ["skill", "at", "status"],
+        "additionalProperties": false,
+        "properties": {
+          "skill": { "type": "string" },
+          "skill_version": { "type": "string" },
+          "at": { "type": "string", "format": "date-time" },
+          "status": { "type": "string", "enum": ["ok", "blocked", "flagged", "modify", "error"] },
+          "note": { "type": "string" }
+        }
+      },
+      "default": []
+    }
+  }
+}

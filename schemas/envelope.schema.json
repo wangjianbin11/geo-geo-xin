@@ -1,0 +1,128 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://asg-content-os/schemas/envelope.schema.json",
+  "title": "ASG Content OS v2 — Skill I/O Envelope",
+  "description": "Every Skill consumes and emits a JSON file conforming to this envelope. This is the n8n-readiness backbone: a node reads `input`, writes `output`, sets `status` + `next_skill`. No conversational dependency is permitted.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "skill",
+    "skill_version",
+    "run_id",
+    "article_id",
+    "stage",
+    "timestamp",
+    "status",
+    "input",
+    "output"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "2.0",
+      "description": "Envelope schema version. Bump only on breaking envelope changes."
+    },
+    "skill": {
+      "type": "string",
+      "description": "Skill name that produced this envelope, e.g. asg-strategic-filter.",
+      "enum": [
+        "asg-strategic-filter",
+        "asg-keyword-researcher",
+        "asg-seo-writer-v2",
+        "asg-editorial-gate",
+        "asg-voice-checker",
+        "asg-geo-benchmarker",
+        "asg-stock-auditor"
+      ]
+    },
+    "skill_version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$",
+      "description": "Semver of the Skill. v0.1 ships as 0.1.0."
+    },
+    "run_id": {
+      "type": "string",
+      "description": "Unique id for this pipeline run. Stable across all skills in one article's run.",
+      "minLength": 1
+    },
+    "article_id": {
+      "type": "string",
+      "pattern": "^ASG-[0-9]{3,}$",
+      "description": "Stable article identifier, e.g. ASG-044. For non-article skills (benchmarker, stock-auditor) use the task id, e.g. ASG-BM-2026W21 or ASG-AUDIT-001 (pattern relaxed by those skills' own io-schema)."
+    },
+    "stage": {
+      "type": "string",
+      "enum": [
+        "pre-production",
+        "production",
+        "quality-control",
+        "publishing",
+        "feedback",
+        "utility"
+      ],
+      "description": "Which phase of the 28-step flow this skill belongs to."
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO-8601 UTC time this envelope was emitted."
+    },
+    "status": {
+      "type": "string",
+      "enum": ["ok", "blocked", "flagged", "modify", "error"],
+      "description": "ok = proceed to next_skill. modify = auto-fix then re-run same skill. flagged = proceed but human should look. blocked = hard stop, human decision required. error = skill failed to run."
+    },
+    "next_skill": {
+      "type": ["string", "null"],
+      "description": "The skill the orchestrator (Claude Code now, n8n later) should run next. null = pipeline end or awaiting human."
+    },
+    "human_gate": {
+      "type": "boolean",
+      "default": false,
+      "description": "True if a Janson confirmation point applies before next_skill runs (the 4 mandatory confirmation points: Filter GO, Outline lock, Editorial Gate, Distribution)."
+    },
+    "library_refs": {
+      "type": "array",
+      "description": "Every Library data point referenced by this skill, by ID. Editorial Gate verifies these resolve.",
+      "items": {
+        "type": "string",
+        "pattern": "^(FACT|CASE|SOURCE|VOICE|TOPIC)-[A-Za-z0-9-]+$"
+      }
+    },
+    "input": {
+      "type": "object",
+      "description": "Skill-specific input. Shape defined by the skill's own io-schema.json under properties.input.",
+      "additionalProperties": true
+    },
+    "output": {
+      "type": "object",
+      "description": "Skill-specific output. Shape defined by the skill's own io-schema.json under properties.output.",
+      "additionalProperties": true
+    },
+    "audit": {
+      "type": "object",
+      "description": "Machine-readable trace for traceability and the feedback loop.",
+      "additionalProperties": false,
+      "properties": {
+        "warnings": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "errors": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "rulebook_refs": {
+          "type": "array",
+          "description": "Rulebook sections this skill enforced, e.g. asg-publishing-gate.md#gate-6.",
+          "items": { "type": "string" }
+        },
+        "duration_ms": {
+          "type": ["integer", "null"],
+          "minimum": 0
+        }
+      }
+    }
+  }
+}
