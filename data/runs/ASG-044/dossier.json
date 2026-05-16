@@ -1,0 +1,84 @@
+{
+  "article_id": "ASG-044",
+  "run_id": "run-ASG-044-2026-05-16",
+  "created_at": "2026-05-16T09:00:00Z",
+  "updated_at": "2026-05-16T11:40:00Z",
+  "topic": "uk dropshipping suppliers",
+  "article_type": "pillar",
+  "language": "en-GB",
+  "cluster": "UK",
+  "filter_report": {
+    "scores": { "search_intent": 9, "asg_relevance": 9, "journey_position": 8, "cluster_fit": 9, "asg_data_support": 8, "duplication_risk": 7 },
+    "total": 50,
+    "decision": "GO",
+    "recommended_article_type": "pillar",
+    "type_reason": "High commercial intent + extends UK Cluster + >=5 FACT/CASE available + deep informational scope.",
+    "cluster": "UK",
+    "priority": "P0",
+    "risk_flags": [],
+    "modify_suggestion": null,
+    "alternative": null,
+    "duplicate_of": null
+  },
+  "keyword_spec": {
+    "mode": "full",
+    "primary_keyword": { "term": "uk dropshipping suppliers", "priority": 92, "pool_status": "new", "kd": 28, "volume": 1900, "cpc": 3.4, "intent": "commercial", "estimated": false },
+    "density_plan": { "article_type": "pillar", "primary_kw_density": "1.0-1.5%", "cooccur_density": "0.5-1.0%" },
+    "seo_placement": ["title-front", "h1", "url-slug", "meta-early", "first-100-words", ">=2 H2/H3", "image-alt"],
+    "geo_placement": ["answer-capsule", "faq-schema", "comparison-table", "step-list"],
+    "cooccurrence_terms": ["sourcing agent", "fulfilment", "lead time", "DDP", "VAT", "supplier vetting", "MOQ"],
+    "selected_keywords": [{ "term": "uk dropshipping suppliers", "kd": 28, "volume": 1900, "cpc": 3.4, "intent": "commercial", "estimated": false }],
+    "cluster_relations": { "cluster": "UK", "internal_link_recommendations": ["#37", "#42", "#43"], "future_expansion": ["uk dropshipping vat guide", "uk fulfilment lead times"] }
+  },
+  "draft": {
+    "html": "<article>... pillar body, en-GB, ~3600 words ...</article>",
+    "rank_math_settings": { "focus_keyword": "uk dropshipping suppliers", "pillar_content": true },
+    "asset_manifest": {
+      "internal_links": ["#37", "#42", "#43", "#1"],
+      "external_links": ["SOURCE-001", "SOURCE-002", "SOURCE-003", "SOURCE-010", "SOURCE-011", "SOURCE-020", "SOURCE-030", "SOURCE-001", "SOURCE-010", "SOURCE-011"],
+      "asg_data_refs": ["FACT-001", "FACT-002", "FACT-010", "FACT-011", "FACT-020", "FACT-021", "FACT-040", "FACT-041", "FACT-042", "CASE-007", "CASE-001"]
+    },
+    "h2_blocks": [
+      { "heading": "What UK dropshipping suppliers actually cost", "library_refs": ["CASE-007", "FACT-021"], "has_answer_block": true, "has_key_takeaway": true },
+      { "heading": "How we vet UK-facing suppliers", "library_refs": ["FACT-001", "FACT-010"], "has_answer_block": true, "has_key_takeaway": true },
+      { "heading": "DDP and VAT realities for UK delivery", "library_refs": ["SOURCE-001", "FACT-021"], "has_answer_block": true, "has_key_takeaway": true },
+      { "heading": "Lead times you can promise customers", "library_refs": ["FACT-021", "FACT-031"], "has_answer_block": true, "has_key_takeaway": true },
+      { "heading": "A real UK shipping cost turnaround", "library_refs": ["CASE-007"], "has_answer_block": true, "has_key_takeaway": true },
+      { "heading": "Scaling a UK store without breaking fulfilment", "library_refs": ["CASE-001", "FACT-041"], "has_answer_block": true, "has_key_takeaway": true }
+    ],
+    "schema_blocks": ["Article", "FAQPage", "BreadcrumbList", "HowTo"],
+    "title_options": [
+      { "title": "UK Dropshipping Suppliers: The Real Cost and Lead-Time Breakdown", "ctr_reference": "no-history" },
+      { "title": "UK Dropshipping Suppliers — What 8 Years of Fulfilment Taught Us", "ctr_reference": "no-history" },
+      { "title": "How to Choose UK Dropshipping Suppliers (Without the Margin Leak)", "ctr_reference": "no-history" },
+      { "title": "UK Dropshipping Suppliers: DDP, VAT and the Numbers That Matter", "ctr_reference": "no-history" },
+      { "title": "The UK Dropshipping Suppliers Guide We Wish New Stores Read First", "ctr_reference": "no-history" }
+    ]
+  },
+  "gate_report": {
+    "attempt": 2,
+    "decision": "PASS",
+    "first_attempt_decision": "BLOCK",
+    "note": "Attempt 1 BLOCKed on Gate 1 + Gate 5; writer auto-fixed (added meta keyword placement + 4 external links); attempt 2 PASS. Proves the gate bites."
+  },
+  "voice_report": { "decision": "PASS" },
+  "publish_package": {
+    "meta_variants": [
+      { "meta": "After 8 years fulfilling UK orders, here is what dropshipping suppliers really cost — DDP, VAT and lead times, with the numbers.", "ctr_reference": "no-history" },
+      { "meta": "UK dropshipping suppliers, the honest version: vetting, DDP/VAT realities and a real £1.85->£0.92 per-order turnaround.", "ctr_reference": "no-history" },
+      { "meta": "How we vet UK dropshipping suppliers and the lead times you can actually promise customers. Real ASG operations data inside.", "ctr_reference": "no-history" }
+    ]
+  },
+  "distribution": null,
+  "performance": null,
+  "library_refs": ["FACT-001", "FACT-002", "FACT-010", "FACT-011", "FACT-020", "FACT-021", "FACT-031", "FACT-040", "FACT-041", "FACT-042", "CASE-001", "CASE-007", "SOURCE-001", "SOURCE-002", "SOURCE-003", "SOURCE-010", "SOURCE-011", "SOURCE-020", "SOURCE-030"],
+  "history": [
+    { "skill": "asg-strategic-filter", "skill_version": "0.1.0", "at": "2026-05-16T09:05:00Z", "status": "ok", "note": "GO / pillar / UK" },
+    { "skill": "asg-keyword-researcher", "skill_version": "0.1.0", "at": "2026-05-16T09:30:00Z", "status": "ok", "note": "full mode" },
+    { "skill": "asg-seo-writer-v2", "skill_version": "0.1.0", "at": "2026-05-16T10:50:00Z", "status": "ok", "note": "draft Steps 1-19, outline locked at gate 2" },
+    { "skill": "asg-editorial-gate", "skill_version": "0.1.0", "at": "2026-05-16T11:05:00Z", "status": "blocked", "note": "attempt 1 BLOCK: Gate 1 + Gate 5" },
+    { "skill": "asg-editorial-gate", "skill_version": "0.1.0", "at": "2026-05-16T11:20:00Z", "status": "ok", "note": "attempt 2 PASS after auto-fix" },
+    { "skill": "asg-seo-writer-v2", "skill_version": "0.1.0", "at": "2026-05-16T11:30:00Z", "status": "ok", "note": "Step 21 meta x3" },
+    { "skill": "asg-voice-checker", "skill_version": "0.1.0", "at": "2026-05-16T11:40:00Z", "status": "ok", "note": "PASS" }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "schema_version": "2.0",
+  "skill": "asg-seo-writer-v2",
+  "skill_version": "0.1.0",
+  "run_id": "run-ASG-044-2026-05-16",
+  "article_id": "ASG-044",
+  "stage": "production",
+  "timestamp": "2026-05-16T11:30:00Z",
+  "status": "ok",
+  "next_skill": "asg-voice-checker",
+  "human_gate": false,
+  "library_refs": [],
+  "input": {
+    "phase": "meta",
+    "article_type": "pillar",
+    "filter_report": { "decision": "GO" },
+    "keyword_spec": { "primary_keyword": { "term": "uk dropshipping suppliers" } },
+    "performance_ref": null
+  },
+  "output": {
+    "draft": null,
+    "meta_variants": [
+      { "meta": "After 8 years fulfilling UK orders, here is what dropshipping suppliers really cost - DDP, VAT and lead times, with the numbers.", "ctr_reference": "no-history" },
+      { "meta": "UK dropshipping suppliers, the honest version: vetting, DDP/VAT realities and a real per-order shipping turnaround.", "ctr_reference": "no-history" },
+      { "meta": "How we vet UK dropshipping suppliers and the lead times you can promise customers. Real ASG operations data inside.", "ctr_reference": "no-history" }
+    ]
+  },
+  "audit": { "warnings": [], "errors": [], "rulebook_refs": ["asg-voice-bible.md#section-9"], "duration_ms": null }
+}

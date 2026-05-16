@@ -1,0 +1,29 @@
+{
+  "schema_version": "2.0",
+  "skill": "asg-voice-checker",
+  "skill_version": "0.1.0",
+  "run_id": "run-ASG-044-2026-05-16",
+  "article_id": "ASG-044",
+  "stage": "quality-control",
+  "timestamp": "2026-05-16T11:40:00Z",
+  "status": "ok",
+  "next_skill": null,
+  "human_gate": false,
+  "library_refs": [],
+  "input": {
+    "article_type": "pillar",
+    "language": "en-GB",
+    "html": "<article><p>I've watched hundreds of UK stores get supplier costs wrong. After 8 years of fulfilment, we route UK parcels differently...</p></article>"
+  },
+  "output": {
+    "checks": [
+      { "id": 1, "name": "first_person_density", "result": "PASS", "offending": [] },
+      { "id": 2, "name": "experience_anchors", "result": "PASS", "offending": [] },
+      { "id": 3, "name": "neutral_expert_drift", "result": "PASS", "offending": [] },
+      { "id": 4, "name": "ai_trace_scan", "result": "PASS", "offending": [] },
+      { "id": 5, "name": "locale_consistency", "result": "PASS", "offending": [] }
+    ],
+    "decision": "PASS"
+  },
+  "audit": { "warnings": [], "errors": [], "rulebook_refs": ["asg-voice-bible.md#section-2", "asg-voice-bible.md#section-9"], "duration_ms": null }
+}

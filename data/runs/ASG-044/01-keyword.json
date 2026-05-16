@@ -1,0 +1,33 @@
+{
+  "schema_version": "2.0",
+  "skill": "asg-keyword-researcher",
+  "skill_version": "0.1.0",
+  "run_id": "run-ASG-044-2026-05-16",
+  "article_id": "ASG-044",
+  "stage": "pre-production",
+  "timestamp": "2026-05-16T09:30:00Z",
+  "status": "ok",
+  "next_skill": "asg-seo-writer-v2",
+  "human_gate": false,
+  "library_refs": [],
+  "input": {
+    "filter_report": { "decision": "GO", "recommended_article_type": "pillar", "cluster": "UK" },
+    "external_data": {
+      "primary_candidates": [{ "term": "uk dropshipping suppliers", "kd": 28, "volume": 1900, "cpc": 3.4, "intent": "commercial" }],
+      "long_tail": [{ "term": "best uk dropshipping suppliers", "volume": 480 }],
+      "cooccurrence": ["sourcing agent", "fulfilment", "lead time", "DDP", "VAT", "supplier vetting", "MOQ"],
+      "competitor_urls": ["https://example-competitor.com/uk-suppliers"]
+    }
+  },
+  "output": {
+    "mode": "full",
+    "primary_keyword": { "term": "uk dropshipping suppliers", "priority": 92, "pool_status": "new", "kd": 28, "volume": 1900, "cpc": 3.4, "intent": "commercial", "estimated": false },
+    "density_plan": { "article_type": "pillar", "primary_kw_density": "1.0-1.5%", "cooccur_density": "0.5-1.0%" },
+    "seo_placement": ["title-front", "h1", "url-slug", "meta-early", "first-100-words", ">=2 H2/H3", "image-alt"],
+    "geo_placement": ["answer-capsule", "faq-schema", "comparison-table", "step-list"],
+    "cooccurrence_terms": ["sourcing agent", "fulfilment", "lead time", "DDP", "VAT", "supplier vetting", "MOQ"],
+    "selected_keywords": [{ "term": "uk dropshipping suppliers", "kd": 28, "volume": 1900, "cpc": 3.4, "intent": "commercial", "estimated": false }],
+    "cluster_relations": { "cluster": "UK", "internal_link_recommendations": ["#37", "#42", "#43"], "future_expansion": ["uk dropshipping vat guide", "uk fulfilment lead times"] }
+  },
+  "audit": { "warnings": [], "errors": [], "rulebook_refs": ["asg-publishing-gate.md#A"], "duration_ms": null }
+}

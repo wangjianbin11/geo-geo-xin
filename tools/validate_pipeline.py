@@ -1,0 +1,184 @@
+#!/usr/bin/env python3
+"""ASG Content OS v2 — pipeline + contract validator (stdlib only).
+
+Proves the skeleton is self-consistent, not paper:
+  1. every run envelope conforms to schemas/envelope.schema.json (required
+     keys / enums / patterns) and to its skill's io-schema `skill` const;
+  2. every library_ref in every envelope + dossier RESOLVES to a real
+     entry in libraries/*/*.json  (this is the Gate-6 contract, enforced);
+  3. the run's envelope chain wires correctly via next_skill (incl. the
+     editorial-gate block->fix->pass retry loop);
+  4. the Article Type Parameter Table is consistent between
+     asg-publishing-gate.md (Single Source of Truth) and
+     asg-editorial-gate/io-schema.json $defs (the mirror).
+
+Exit 0 = all green. Exit 1 = at least one failure.
+Usage:  python3 tools/validate_pipeline.py [run_id ...]   (default: ASG-044)
+"""
+import json, re, sys, glob, os, datetime
+
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+ok, fail = [], []
+
+
+def check(cond, msg):
+    (ok if cond else fail).append(msg)
+    print(("  PASS " if cond else "  FAIL ") + msg)
+
+
+def load(p):
+    with open(os.path.join(ROOT, p), encoding="utf-8") as f:
+        return json.load(f)
+
+
+# ---- 1. build the Library ID universe -------------------------------------
+def library_ids():
+    ids = set()
+    for jp in glob.glob(os.path.join(ROOT, "libraries", "**", "*.json"), recursive=True):
+        data = json.load(open(jp, encoding="utf-8"))
+        for key in ("facts", "cases", "sources", "voices"):
+            for row in data.get(key, []):
+                if "id" in row:
+                    ids.add(row["id"])
+    return ids
+
+
+LIB_IDS = library_ids()
+REF_RE = re.compile(r"^(FACT|CASE|SOURCE|VOICE|TOPIC)-[A-Za-z0-9-]+$")
+SEMVER_RE = re.compile(r"^\d+\.\d+\.\d+$")
+ART_RE = re.compile(r"^ASG-(\d{3,}|BM-\d{4}W\d{1,2}|AUDIT-\d{3,})$")
+ENV_REQUIRED = ["schema_version", "skill", "skill_version", "run_id",
+                "article_id", "stage", "timestamp", "status", "input", "output"]
+SKILL_ENUM = {"asg-strategic-filter", "asg-keyword-researcher", "asg-seo-writer-v2",
+              "asg-editorial-gate", "asg-voice-checker", "asg-geo-benchmarker",
+              "asg-stock-auditor"}
+STAGE_ENUM = {"pre-production", "production", "quality-control", "publishing",
+              "feedback", "utility"}
+STATUS_ENUM = {"ok", "blocked", "flagged", "modify", "error"}
+
+# skill name -> io-schema path (to verify the const wiring is real)
+IO_SCHEMA = {
+    "asg-strategic-filter": "skills/pre-production/asg-strategic-filter/io-schema.json",
+    "asg-keyword-researcher": "skills/pre-production/asg-keyword-researcher/io-schema.json",
+    "asg-seo-writer-v2": "skills/production/asg-seo-writer-v2/io-schema.json",
+    "asg-editorial-gate": "skills/quality-control/asg-editorial-gate/io-schema.json",
+    "asg-voice-checker": "skills/quality-control/asg-voice-checker/io-schema.json",
+    "asg-geo-benchmarker": "skills/feedback/asg-geo-benchmarker/io-schema.json",
+    "asg-stock-auditor": "skills/utility/asg-stock-auditor/io-schema.json",
+}
+
+
+def validate_envelope(path, env):
+    tag = os.path.basename(path)
+    for k in ENV_REQUIRED:
+        check(k in env, f"{tag}: required key '{k}' present")
+    check(env.get("schema_version") == "2.0", f"{tag}: schema_version==2.0")
+    check(env.get("skill") in SKILL_ENUM, f"{tag}: skill in enum ({env.get('skill')})")
+    check(bool(SEMVER_RE.match(env.get("skill_version", ""))), f"{tag}: skill_version semver")
+    check(env.get("stage") in STAGE_ENUM, f"{tag}: stage in enum")
+    check(env.get("status") in STATUS_ENUM, f"{tag}: status in enum")
+    check(bool(ART_RE.match(env.get("article_id", ""))), f"{tag}: article_id pattern")
+    try:
+        datetime.datetime.fromisoformat(env.get("timestamp", "").replace("Z", "+00:00"))
+        tsok = True
+    except Exception:
+        tsok = False
+    check(tsok, f"{tag}: timestamp ISO-8601")
+    check(isinstance(env.get("input"), dict), f"{tag}: input is object")
+    check(isinstance(env.get("output"), dict), f"{tag}: output is object")
+    for r in env.get("library_refs", []):
+        check(bool(REF_RE.match(r)), f"{tag}: library_ref '{r}' well-formed")
+        check(r in LIB_IDS, f"{tag}: library_ref '{r}' RESOLVES in libraries/ (Gate-6 contract)")
+    # skill const wiring is real
+    sk = env.get("skill")
+    if sk in IO_SCHEMA:
+        const = load(IO_SCHEMA[sk]).get("properties", {}).get("skill", {}).get("const")
+        check(const == sk, f"{tag}: io-schema skill const matches ({const})")
+
+
+def validate_chain(run):
+    rundir = os.path.join("data", "runs", run)
+    files = sorted(glob.glob(os.path.join(ROOT, rundir, "[0-9]*.json")))
+    check(len(files) > 0, f"{run}: has envelope files")
+    envs = []
+    for fp in files:
+        rel = os.path.relpath(fp, ROOT)
+        env = json.load(open(fp, encoding="utf-8"))
+        print(f"\n[{rel}]")
+        validate_envelope(fp, env)
+        envs.append((os.path.basename(fp), env))
+    # first skill must be the filter
+    if envs:
+        check(envs[0][1]["skill"] == "asg-strategic-filter",
+              f"{run}: pipeline starts with asg-strategic-filter")
+    # next_skill wiring (gate retry: a 'blocked' gate may be followed by another gate attempt)
+    for i in range(len(envs) - 1):
+        name, e = envs[i]
+        nxt = envs[i + 1][1]["skill"]
+        ns = e.get("next_skill")
+        if e["skill"] == "asg-editorial-gate" and e["status"] == "blocked":
+            check(envs[i + 1][1]["skill"] == "asg-editorial-gate",
+                  f"{run}: blocked gate is followed by a gate retry")
+        else:
+            check(ns == nxt, f"{run}: {name} next_skill='{ns}' -> next file skill='{nxt}'")
+    # terminal envelope ends the chain
+    if envs:
+        last = envs[-1][1]
+        check(last.get("next_skill") in (None, "null"),
+              f"{run}: terminal envelope next_skill is null")
+    return envs
+
+
+def validate_dossier(run):
+    dp = os.path.join("data", "runs", run, "dossier.json")
+    if not os.path.exists(os.path.join(ROOT, dp)):
+        return
+    d = load(dp)
+    print(f"\n[{dp}]")
+    for k in ("article_id", "run_id", "topic", "article_type"):
+        check(k in d, f"dossier: required key '{k}'")
+    for r in d.get("library_refs", []):
+        check(r in LIB_IDS, f"dossier: library_ref '{r}' RESOLVES")
+    # dossier.draft asg_data_refs must all resolve (Gate-6 at dossier level)
+    refs = (d.get("draft") or {}).get("asset_manifest", {}).get("asg_data_refs", [])
+    for r in refs:
+        check(r in LIB_IDS, f"dossier.draft asg_data_ref '{r}' RESOLVES")
+
+
+def validate_param_table_consistency():
+    print("\n[cross-file: Article Type Parameter Table SSoT]")
+    defs = load("skills/quality-control/asg-editorial-gate/io-schema.json")["$defs"]["article_type_params"]
+    expected = {
+        "pillar":   {"word_count": [3000, 5000], "h2_count": [6, 7], "internal_links": 4, "external_links": 10, "asg_data_refs": 9, "case_refs": 2},
+        "share":    {"word_count": [2000, 3000], "h2_count": [5, 6], "internal_links": 3, "external_links": 8, "asg_data_refs": 5, "case_refs": 1},
+        "response": {"word_count": [1200, 2000], "h2_count": [3, 4], "internal_links": 2, "external_links": 5, "asg_data_refs": 3, "case_refs": 1},
+    }
+    for t, exp in expected.items():
+        for k, v in exp.items():
+            check(defs[t][k] == v, f"io-schema $defs {t}.{k}=={v} (got {defs[t].get(k)})")
+    gate_md = open(os.path.join(ROOT, "rulebooks", "asg-publishing-gate.md"), encoding="utf-8").read()
+    for token in ("3000–5000", "2000–3000", "1200–2000"):
+        check(token in gate_md, f"publishing-gate.md §A contains word band '{token}' (SSoT aligned)")
+
+
+def main():
+    runs = sys.argv[1:] or ["ASG-044"]
+    print(f"Library ID universe: {len(LIB_IDS)} ids loaded\n" + "=" * 64)
+    for run in runs:
+        print(f"\n### RUN {run} " + "#" * 40)
+        validate_chain(run)
+        validate_dossier(run)
+    validate_param_table_consistency()
+    print("\n" + "=" * 64)
+    print(f"RESULT: {len(ok)} passed, {len(fail)} failed")
+    if fail:
+        print("\nFAILURES:")
+        for m in fail:
+            print("  - " + m)
+        sys.exit(1)
+    print("ALL GREEN — pipeline contract is self-consistent.")
+    sys.exit(0)
+
+
+if __name__ == "__main__":
+    main()

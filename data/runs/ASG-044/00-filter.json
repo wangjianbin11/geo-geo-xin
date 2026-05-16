@@ -1,0 +1,28 @@
+{
+  "schema_version": "2.0",
+  "skill": "asg-strategic-filter",
+  "skill_version": "0.1.0",
+  "run_id": "run-ASG-044-2026-05-16",
+  "article_id": "ASG-044",
+  "stage": "pre-production",
+  "timestamp": "2026-05-16T09:05:00Z",
+  "status": "ok",
+  "next_skill": "asg-keyword-researcher",
+  "human_gate": true,
+  "library_refs": ["CASE-007", "CASE-001", "FACT-041"],
+  "input": { "topic": "uk dropshipping suppliers", "target_market": "UK" },
+  "output": {
+    "scores": { "search_intent": 9, "asg_relevance": 9, "journey_position": 8, "cluster_fit": 9, "asg_data_support": 8, "duplication_risk": 7 },
+    "total": 50,
+    "decision": "GO",
+    "recommended_article_type": "pillar",
+    "type_reason": "Commercial intent, extends UK Cluster, >=5 FACT/CASE available, deep scope.",
+    "cluster": "UK",
+    "priority": "P0",
+    "risk_flags": [],
+    "modify_suggestion": null,
+    "alternative": null,
+    "duplicate_of": null
+  },
+  "audit": { "warnings": [], "errors": [], "rulebook_refs": ["asg-content-constitution.md#article-1", "asg-publishing-gate.md#A"], "duration_ms": null }
+}

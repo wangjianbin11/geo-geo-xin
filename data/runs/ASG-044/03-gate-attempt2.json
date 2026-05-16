@@ -1,0 +1,38 @@
+{
+  "schema_version": "2.0",
+  "skill": "asg-editorial-gate",
+  "skill_version": "0.1.0",
+  "run_id": "run-ASG-044-2026-05-16",
+  "article_id": "ASG-044",
+  "stage": "quality-control",
+  "timestamp": "2026-05-16T11:20:00Z",
+  "status": "ok",
+  "next_skill": "asg-seo-writer-v2",
+  "human_gate": true,
+  "library_refs": ["FACT-001", "CASE-007", "CASE-001"],
+  "input": {
+    "article_type": "pillar",
+    "keyword_spec": { "mode": "full" },
+    "draft": { "asset_manifest": { "external_links": ["SOURCE-001", "SOURCE-002", "SOURCE-003", "SOURCE-010", "SOURCE-011", "SOURCE-020", "SOURCE-030", "SOURCE-001", "SOURCE-010", "SOURCE-011"], "asg_data_refs": ["FACT-001", "FACT-002", "FACT-010", "FACT-011", "FACT-020", "FACT-021", "FACT-040", "FACT-041", "FACT-042", "CASE-007", "CASE-001"] }, "schema_blocks": ["Article", "FAQPage", "BreadcrumbList", "HowTo"] }
+  },
+  "output": {
+    "checks": [
+      { "id": 1, "name": "Primary keyword SEO placement", "result": "PASS", "detail": "All positions except meta (deferred to Step 21, acceptable at Step 20)." },
+      { "id": 2, "name": "Primary keyword density", "result": "PASS", "detail": "1.2% within 1.0-1.5%." },
+      { "id": 3, "name": "Co-occurrence coverage", "result": "PASS", "detail": "7/7." },
+      { "id": 4, "name": "Schema completeness", "result": "PASS", "detail": "4 schema blocks present." },
+      { "id": 5, "name": "Internal/external link counts", "result": "PASS", "detail": "internal=4>=4, external=10>=10." },
+      { "id": 6, "name": "ASG data Library ID tagging", "result": "PASS", "detail": "11 refs, all resolvable; asg_data_refs=11>=9, case_refs=2>=2." },
+      { "id": 7, "name": "Per-H2 structure", "result": "PASS", "detail": "OK." },
+      { "id": 8, "name": "Paragraph rules", "result": "PASS", "detail": "OK." },
+      { "id": 9, "name": "Banned-word / compliance scan", "result": "PASS", "detail": "Clean." },
+      { "id": 10, "name": "Duplicate content", "result": "PASS", "detail": "11%." }
+    ],
+    "decision": "PASS",
+    "modify_list": [],
+    "block_reasons": [],
+    "auto_fix_attempted": true,
+    "attempt": 2
+  },
+  "audit": { "warnings": [], "errors": [], "rulebook_refs": ["asg-publishing-gate.md#C"], "duration_ms": null }
+}

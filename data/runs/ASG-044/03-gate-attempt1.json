@@ -1,0 +1,38 @@
+{
+  "schema_version": "2.0",
+  "skill": "asg-editorial-gate",
+  "skill_version": "0.1.0",
+  "run_id": "run-ASG-044-2026-05-16",
+  "article_id": "ASG-044",
+  "stage": "quality-control",
+  "timestamp": "2026-05-16T11:05:00Z",
+  "status": "blocked",
+  "next_skill": null,
+  "human_gate": true,
+  "library_refs": ["FACT-001", "CASE-007", "CASE-001"],
+  "input": {
+    "article_type": "pillar",
+    "keyword_spec": { "mode": "full" },
+    "draft": { "asset_manifest": { "external_links": ["SOURCE-001", "SOURCE-002", "SOURCE-003", "SOURCE-010", "SOURCE-011", "SOURCE-020"], "asg_data_refs": ["FACT-001", "CASE-007"] }, "schema_blocks": ["Article", "FAQPage", "BreadcrumbList", "HowTo"] }
+  },
+  "output": {
+    "checks": [
+      { "id": 1, "name": "Primary keyword SEO placement", "result": "MODIFY", "detail": "Missing in meta description (meta not yet generated at Step 19) — flagged for Step 21." },
+      { "id": 2, "name": "Primary keyword density", "result": "PASS", "detail": "1.2% within pillar 1.0-1.5%." },
+      { "id": 3, "name": "Co-occurrence coverage", "result": "PASS", "detail": "7/7 present." },
+      { "id": 4, "name": "Schema completeness", "result": "PASS", "detail": "Article+FAQPage+BreadcrumbList+HowTo present." },
+      { "id": 5, "name": "Internal/external link counts", "result": "BLOCK", "detail": "external_links=6, pillar minimum=10. Short by 4 (>=3 -> BLOCK)." },
+      { "id": 6, "name": "ASG data Library ID tagging", "result": "PASS", "detail": "All ASG data carries resolvable IDs." },
+      { "id": 7, "name": "Per-H2 structure", "result": "PASS", "detail": "All H2 have answer block + key takeaway + structure." },
+      { "id": 8, "name": "Paragraph rules", "result": "PASS", "detail": "No paragraph > 5 sentences." },
+      { "id": 9, "name": "Banned-word / compliance scan", "result": "PASS", "detail": "Clean." },
+      { "id": 10, "name": "Duplicate content", "result": "PASS", "detail": "Max similarity 11% vs retained set." }
+    ],
+    "decision": "BLOCK",
+    "modify_list": ["Gate 1: inject primary keyword into meta at Step 21."],
+    "block_reasons": ["Gate 5: external links 6/10 for pillar — add >=4 authority sources from authority-pool."],
+    "auto_fix_attempted": true,
+    "attempt": 1
+  },
+  "audit": { "warnings": [], "errors": [], "rulebook_refs": ["asg-publishing-gate.md#gate-5", "asg-publishing-gate.md#C"], "duration_ms": null }
+}
