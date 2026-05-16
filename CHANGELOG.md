@@ -13,11 +13,20 @@
 - `data/runs/ASG-044/` — 主链端到端 mock 干跑(filter→keyword→draft→gate(BLOCK→fix→PASS)→meta→voice)。
 - `tools/validate_pipeline.py` — 零依赖 CI 式校验器:信封合规 + library_ref 解析 +
   next_skill 链路 + 参数表跨文件一致性。260/260 全绿。
-- `libraries/` — 4 个 Library 结构 v0.1:facts / cases / sources / voices(ID 方案 + frontmatter + 引用计数 + .json 索引)。
-- `skills/` — 7 个 Skill v0.1(各含 SKILL.md + io-schema.json + tests/):
-  strategic-filter / keyword-researcher / seo-writer-v2 / editorial-gate /
-  voice-checker / geo-benchmarker / stock-auditor。
+- `libraries/` — 5 个 Library 结构 v0.1:facts / cases / sources / voices / topics
+  (ID 方案 + frontmatter + 引用计数 + .json 索引)。
+- `skills/` — 12 个 Skill v0.1(各含 SKILL.md + io-schema.json + tests/):
+  - 主链:strategic-filter / keyword-researcher / seo-writer-v2 / editorial-gate / voice-checker
+  - 分发(阶段 3):facebook-page / facebook-groups / short-video-scripter / platform-polisher
+  - 旁路反馈:geo-benchmarker(周)/ monthly-auditor(月)/ stock-auditor(一次)
+- `workflows/28-step-flow.md` — 解决方案中 `【表格待补】`:28 步全表 + writer 21 步映射。
 - `README.md` / `AGENTS.md` — 项目说明与 Skill 调用图。
+
+### Changed
+
+- `schemas/envelope.schema.json` — `skill` 枚举中心化扩展至 12(纳入分发/月审/新增)。
+- `tools/validate_pipeline.py` — 扩展:全 12 Skill io-schema lint + enum-todo 已解决
+  校验 + Topics 库 ID 解析 + 孤儿 Skill 检测。**344/344 全绿**。
 
 ### Notes
 

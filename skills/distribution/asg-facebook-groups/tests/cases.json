@@ -1,0 +1,40 @@
+{
+  "skill": "asg-facebook-groups",
+  "skill_version": "0.1.0",
+  "note": "v0.1 acceptance: value-first community framing, anti-spam, link to first-comment, no fabrication.",
+  "cases": [
+    {
+      "name": "ASG-044 UK pillar -> community post, link in first comment",
+      "input": {
+        "article_type": "pillar",
+        "language": "en-GB",
+        "publish_package": { "canonical_url": "https://example.com/uk-dropshipping-suppliers" },
+        "source_library_refs": ["FACT-021", "CASE-007"],
+        "draft": "<article><p>Sharing something from 8 years fulfilling UK orders: most stores lose margin in the parcel split, not the product cost. CASE-007 walks through one turnaround.</p></article>"
+      },
+      "expect": { "decision": "ok", "link_placement": "first-comment", "library_refs_subset_of_source": true }
+    },
+    {
+      "name": "hard-sell phrasing input -> anti_spam_flags + rewritten soft",
+      "input": {
+        "article_type": "share",
+        "language": "en-GB",
+        "publish_package": { "canonical_url": "https://example.com/uk-suppliers" },
+        "source_library_refs": ["FACT-021"],
+        "draft": "<article><p>DM me for our supplier list and check the link in bio for our paid service pricing.</p></article>"
+      },
+      "expect": { "decision": "flagged", "anti_spam_flags_include": ["dm-me-removed", "link-in-bio-removed"], "no_hard_sell": true }
+    },
+    {
+      "name": "fabrication refused (unsourced ASG metric requested)",
+      "input": {
+        "article_type": "response",
+        "language": "en-US",
+        "publish_package": { "canonical_url": "https://example.com/us-supplier-q" },
+        "source_library_refs": ["FACT-002"],
+        "draft": "<article><p>FACT-002 documents our US lead times. No claim of a 3x conversion lift appears in the article.</p></article>"
+      },
+      "expect": { "decision": "flagged", "notes_include": "fabrication-refused", "library_refs": ["FACT-002"] }
+    }
+  ]
+}

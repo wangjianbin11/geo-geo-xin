@@ -36,7 +36,7 @@ def library_ids():
     ids = set()
     for jp in glob.glob(os.path.join(ROOT, "libraries", "**", "*.json"), recursive=True):
         data = json.load(open(jp, encoding="utf-8"))
-        for key in ("facts", "cases", "sources", "voices"):
+        for key in ("facts", "cases", "sources", "voices", "topics"):
             for row in data.get(key, []):
                 if "id" in row:
                     ids.add(row["id"])
@@ -46,17 +46,12 @@ def library_ids():
 LIB_IDS = library_ids()
 REF_RE = re.compile(r"^(FACT|CASE|SOURCE|VOICE|TOPIC)-[A-Za-z0-9-]+$")
 SEMVER_RE = re.compile(r"^\d+\.\d+\.\d+$")
-ART_RE = re.compile(r"^ASG-(\d{3,}|BM-\d{4}W\d{1,2}|AUDIT-\d{3,})$")
+ART_RE = re.compile(r"^ASG-(\d{3,}|BM-\d{4}W\d{1,2}|AUDIT-\d{3,}|MA-\d{4}-\d{2})$")
 ENV_REQUIRED = ["schema_version", "skill", "skill_version", "run_id",
                 "article_id", "stage", "timestamp", "status", "input", "output"]
-SKILL_ENUM = {"asg-strategic-filter", "asg-keyword-researcher", "asg-seo-writer-v2",
-              "asg-editorial-gate", "asg-voice-checker", "asg-geo-benchmarker",
-              "asg-stock-auditor"}
-STAGE_ENUM = {"pre-production", "production", "quality-control", "publishing",
-              "feedback", "utility"}
-STATUS_ENUM = {"ok", "blocked", "flagged", "modify", "error"}
 
-# skill name -> io-schema path (to verify the const wiring is real)
+# skill name -> io-schema path. Single source: discovered, then asserted
+# against the envelope enum so a new skill cannot silently bypass the contract.
 IO_SCHEMA = {
     "asg-strategic-filter": "skills/pre-production/asg-strategic-filter/io-schema.json",
     "asg-keyword-researcher": "skills/pre-production/asg-keyword-researcher/io-schema.json",
@@ -64,8 +59,19 @@ IO_SCHEMA = {
     "asg-editorial-gate": "skills/quality-control/asg-editorial-gate/io-schema.json",
     "asg-voice-checker": "skills/quality-control/asg-voice-checker/io-schema.json",
     "asg-geo-benchmarker": "skills/feedback/asg-geo-benchmarker/io-schema.json",
+    "asg-monthly-auditor": "skills/feedback/asg-monthly-auditor/io-schema.json",
     "asg-stock-auditor": "skills/utility/asg-stock-auditor/io-schema.json",
+    "asg-facebook-page": "skills/distribution/asg-facebook-page/io-schema.json",
+    "asg-facebook-groups": "skills/distribution/asg-facebook-groups/io-schema.json",
+    "asg-short-video-scripter": "skills/distribution/asg-short-video-scripter/io-schema.json",
+    "asg-platform-polisher": "skills/distribution/asg-platform-polisher/io-schema.json",
 }
+ENVELOPE_SKILL_ENUM = set(
+    load("schemas/envelope.schema.json")["properties"]["skill"]["enum"])
+SKILL_ENUM = set(IO_SCHEMA) | ENVELOPE_SKILL_ENUM
+STAGE_ENUM = set(
+    load("schemas/envelope.schema.json")["properties"]["stage"]["enum"])
+STATUS_ENUM = {"ok", "blocked", "flagged", "modify", "error"}
 
 
 def validate_envelope(path, env):
@@ -161,13 +167,41 @@ def validate_param_table_consistency():
         check(token in gate_md, f"publishing-gate.md §A contains word band '{token}' (SSoT aligned)")
 
 
+def validate_skill_schemas():
+    print("\n[all skill io-schemas — envelope conformance + enum-todo resolved]")
+    for name, rel in sorted(IO_SCHEMA.items()):
+        check(os.path.exists(os.path.join(ROOT, rel)), f"{name}: io-schema file exists")
+        if not os.path.exists(os.path.join(ROOT, rel)):
+            continue
+        s = load(rel)
+        refs = [a.get("$ref") for a in s.get("allOf", [])]
+        check("https://asg-content-os/schemas/envelope.schema.json" in refs,
+              f"{name}: io-schema allOf $ref envelope")
+        check(s.get("properties", {}).get("skill", {}).get("const") == name,
+              f"{name}: skill const == dir name")
+        check(name in ENVELOPE_SKILL_ENUM,
+              f"{name}: present in envelope.schema.json skill enum (enum-todo resolved)")
+        check("input" in s.get("properties", {}) and "output" in s.get("properties", {}),
+              f"{name}: io-schema declares input + output")
+    # discovered skill dirs must all be registered (no orphan skill bypassing lint)
+    found = {os.path.basename(os.path.dirname(p))
+             for p in glob.glob(os.path.join(ROOT, "skills", "*", "*", "io-schema.json"))}
+    for d in sorted(found):
+        check(d in IO_SCHEMA, f"skill dir '{d}' is registered in validator IO_SCHEMA")
+    # every envelope-enum skill must have an io-schema (no dangling enum entry)
+    for e in sorted(ENVELOPE_SKILL_ENUM):
+        check(e in IO_SCHEMA, f"envelope enum skill '{e}' has a registered io-schema")
+
+
 def main():
     runs = sys.argv[1:] or ["ASG-044"]
-    print(f"Library ID universe: {len(LIB_IDS)} ids loaded\n" + "=" * 64)
+    print(f"Library ID universe: {len(LIB_IDS)} ids loaded "
+          f"| {len(IO_SCHEMA)} skills registered\n" + "=" * 64)
     for run in runs:
         print(f"\n### RUN {run} " + "#" * 40)
         validate_chain(run)
         validate_dossier(run)
+    validate_skill_schemas()
     validate_param_table_consistency()
     print("\n" + "=" * 64)
     print(f"RESULT: {len(ok)} passed, {len(fail)} failed")

@@ -3,20 +3,26 @@
 > 给 Claude Code / 未来 n8n 编排器看的 Skill 目录与调用图。
 > 每个 Skill 的契约见各自目录下 `io-schema.json`,共用信封见 `schemas/envelope.schema.json`。
 
-## Skill 清单(阶段 1+2 核心,共 7 个)
+## Skill 清单(共 12 个,全部 v0.1)
 
-| # | Skill | 阶段 | 状态 | 目录 |
+| # | Skill | 阶段(stage) | 链 | 目录 |
 |---|---|---|---|---|
-| 1 | asg-strategic-filter | pre-production | 🆕 v0.1 | `skills/pre-production/asg-strategic-filter/` |
-| 2 | asg-keyword-researcher | pre-production | 🆕 v0.1 | `skills/pre-production/asg-keyword-researcher/` |
-| 3 | asg-seo-writer-v2 | production | 🟠 v0.1 | `skills/production/asg-seo-writer-v2/` |
-| 4 | asg-editorial-gate | quality-control | 🆕 v0.1 | `skills/quality-control/asg-editorial-gate/` |
-| 5 | asg-voice-checker | quality-control | 🆕 v0.1 | `skills/quality-control/asg-voice-checker/` |
-| 6 | asg-geo-benchmarker | feedback | 🆕 v0.1 | `skills/feedback/asg-geo-benchmarker/` |
-| 7 | asg-stock-auditor | utility | 🆕 v0.1 | `skills/utility/asg-stock-auditor/` |
+| 1 | asg-strategic-filter | pre-production | 主链 | `skills/pre-production/asg-strategic-filter/` |
+| 2 | asg-keyword-researcher | pre-production | 主链 | `skills/pre-production/asg-keyword-researcher/` |
+| 3 | asg-seo-writer-v2 | production | 主链 | `skills/production/asg-seo-writer-v2/` |
+| 4 | asg-editorial-gate | quality-control | 主链 | `skills/quality-control/asg-editorial-gate/` |
+| 5 | asg-voice-checker | quality-control | 主链 | `skills/quality-control/asg-voice-checker/` |
+| 6 | asg-facebook-page | publishing | 分发 | `skills/distribution/asg-facebook-page/` |
+| 7 | asg-facebook-groups | publishing | 分发 | `skills/distribution/asg-facebook-groups/` |
+| 8 | asg-short-video-scripter | publishing | 分发 | `skills/distribution/asg-short-video-scripter/` |
+| 9 | asg-platform-polisher | publishing | 分发 | `skills/distribution/asg-platform-polisher/` |
+| 10 | asg-geo-benchmarker | feedback | 旁路(周) | `skills/feedback/asg-geo-benchmarker/` |
+| 11 | asg-monthly-auditor | feedback | 旁路(月) | `skills/feedback/asg-monthly-auditor/` |
+| 12 | asg-stock-auditor | utility | 旁路(一次) | `skills/utility/asg-stock-auditor/` |
 
-阶段 3 Skill(facebook-page / facebook-groups / short-video / 平台精修)与延后
-Skill(youtube / service-page)本波不做,见方案第 11.4 节。
+延后 Skill(youtube / service-page)仍不做,见方案第 11.4 节。
+注:分发 Skill 的 stage 取 `publishing`(envelope 枚举内),`skills/distribution/`
+仅为目录归类,非新 stage 值。
 
 ## 主链调用图(单篇文章 28 步)
 
@@ -44,14 +50,24 @@ Skill(youtube / service-page)本波不做,见方案第 11.4 节。
 ⑥ asg-voice-checker  Step 22  ──flagged──▶ [标问题段落+改写建议,可继续]
    │ ok(PASS)
    ▼
-[Step 23 打包] ─▶ [Step 24 分发, human_gate ④] ─▶ [Step 25-27 反馈闭环]
+[Step 23 打包]
+   ▼
+[Step 24 分发] human_gate ④,每平台逐个确认:
+   ├─ asg-short-video-scripter  (24c, 内部脚本产物, human_gate=false)
+   ├─ asg-facebook-page         (24a, 外发, human_gate=true)
+   ├─ asg-facebook-groups       (24b, 外发, human_gate=true)
+   └─ asg-platform-polisher     (24d, 各平台终轮精修, human_gate=true, next=null)
+   ▼
+[Step 25-27 反馈闭环 → asg-monthly-auditor(月)]
 ```
 
-旁路(独立触发):
+旁路(独立触发,不在主链):
 
 ```
-asg-geo-benchmarker  ◀── 每周手动触发 ──  产出规则修订建议 ──▶ asg-geo-standards / publishing-gate
-asg-stock-auditor    ◀── 一次性触发   ──  产出 43 篇审计表 ──▶ 阶段 1 验收
+asg-geo-benchmarker  ◀── 每周手动触发  ──  产出规则修订建议 ──▶ asg-geo-standards / publishing-gate
+asg-monthly-auditor  ◀── 每月手动触发  ──  逐篇 KEEP/UPGRADE/REWRITE/KILL + Topics Pool 动作
+                                            + 规则修订提案(只提案,不自动改)──▶ 月度人工合入
+asg-stock-auditor    ◀── 一次性触发    ──  产出 43 篇审计表 ──▶ 阶段 1 验收
 ```
 
 ## 4 个强制人工确认点(human_gate)

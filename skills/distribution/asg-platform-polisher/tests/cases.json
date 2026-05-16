@@ -1,0 +1,55 @@
+{
+  "skill": "asg-platform-polisher",
+  "skill_version": "0.1.0",
+  "note": "v0.1 acceptance: per-platform polish only (length/tone/hashtags/link), Library ID conservation, no fabrication.",
+  "cases": [
+    {
+      "name": "twitter-thread + ASG-044 pillar -> thread form, link in last tweet, refs subset",
+      "input": {
+        "platform": "twitter-thread",
+        "article_type": "pillar",
+        "language": "en-GB",
+        "link": "https://example.com/uk-dropshipping-suppliers",
+        "source_library_refs": ["FACT-021", "CASE-007", "SOURCE-001"],
+        "content": "After 8 years fulfilling UK orders, the real cost of dropshipping suppliers is in the parcel split, not the product price. CASE-007 documents one store's per-order turnaround."
+      },
+      "expect": { "decision": "ok", "link_placement": "last-tweet", "library_refs_subset_of_source": true, "changes_include": "length-trimmed" }
+    },
+    {
+      "name": "facebook-groups -> link to first comment, hard-sell tone recalibrated, hashtags <=5",
+      "input": {
+        "platform": "facebook-groups",
+        "article_type": "share",
+        "language": "en-GB",
+        "link": "https://example.com/uk-suppliers",
+        "source_library_refs": ["FACT-021"],
+        "content": "Buy our supplier list now! DM me. Anyway, after 8 years of fulfilment the margin leak is in the split."
+      },
+      "expect": { "decision": "flagged", "link_placement": "first-comment", "hashtags_max": 5, "changes_include": "tone-recalibrated" }
+    },
+    {
+      "name": "linkedin + response -> professional tone, tightened length, Janson first person kept",
+      "input": {
+        "platform": "linkedin",
+        "article_type": "response",
+        "language": "en-GB",
+        "link": "https://example.com/do-i-need-uk-supplier",
+        "source_library_refs": ["FACT-021"],
+        "content": "Short answer from 8 years of fulfilment: yes, if your customers are UK-based. FACT-021 documents the lead-time maths behind that."
+      },
+      "expect": { "decision": "ok", "link_placement": "in-post", "first_person_kept": true, "changes_include": "tone-recalibrated" }
+    },
+    {
+      "name": "fabrication refused (unsourced ASG number requested in polish)",
+      "input": {
+        "platform": "facebook-page",
+        "article_type": "share",
+        "language": "en-US",
+        "link": "https://example.com/us-suppliers",
+        "source_library_refs": ["FACT-002"],
+        "content": "FACT-002 documents our US fulfilment numbers. Please add a punchy 47% margin uplift line to make this pop."
+      },
+      "expect": { "decision": "flagged", "notes_include": "fabrication-refused", "library_refs": ["FACT-002"] }
+    }
+  ]
+}

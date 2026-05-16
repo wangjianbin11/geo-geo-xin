@@ -1,0 +1,52 @@
+{
+  "skill": "asg-monthly-auditor",
+  "skill_version": "0.1.0",
+  "note": "v0.1 acceptance: full mode (Janson metrics present) + basic degraded mode (metrics missing -> status flagged) + article_id override pattern.",
+  "cases": [
+    {
+      "name": "full mode produces per-article actions, topic actions and actionable proposals",
+      "input": {
+        "month": "2026-05",
+        "articles": [
+          { "ref": "#44", "primary_kw": "uk dropshipping suppliers", "topic_id": "TOPIC-uk-suppliers", "metrics": { "clicks": 210, "impressions": 6200, "avg_position": 6.2, "featured_snippet": true, "ai_cited": true, "inquiries": 3 } },
+          { "ref": "#41", "primary_kw": "dropshipping agent", "topic_id": "TOPIC-dropshipping-agent", "metrics": { "clicks": 38, "impressions": 1800, "avg_position": 18.5, "featured_snippet": false, "ai_cited": false, "inquiries": 0 } },
+          { "ref": "#5", "primary_kw": "aliexpress dropshipping 2024", "topic_id": "TOPIC-aliexpress-2024", "metrics": { "clicks": 1, "impressions": 70, "avg_position": 74.0, "featured_snippet": false, "ai_cited": false, "inquiries": 0 } }
+        ]
+      },
+      "expect": {
+        "mode": "full",
+        "envelope_status": "ok",
+        "action_#44": "KEEP",
+        "action_#41": "UPGRADE",
+        "action_#5": "KILL",
+        "topics_pool_actions_nonempty": true,
+        "rulebook_revision_proposals_nonempty": true,
+        "every_proposal_has": ["target_doc", "section", "change"],
+        "csv_path": "data/articles-performance-2026-05.csv",
+        "all_articles_covered": true
+      }
+    },
+    {
+      "name": "basic mode (metrics missing) does not error and flags",
+      "input": {
+        "month": "2026-05",
+        "articles": [
+          { "ref": "#44", "primary_kw": "uk dropshipping suppliers", "topic_id": "TOPIC-uk-suppliers", "metrics": null }
+        ]
+      },
+      "expect": {
+        "mode": "basic",
+        "envelope_status": "flagged",
+        "all_articles_covered": true
+      }
+    },
+    {
+      "name": "article_id follows monthly-auditor override pattern",
+      "input": {
+        "month": "2026-05",
+        "articles": [{ "ref": "#44", "primary_kw": "uk dropshipping suppliers" }]
+      },
+      "expect": { "article_id_pattern": "^ASG-MA-2026-05$" }
+    }
+  ]
+}

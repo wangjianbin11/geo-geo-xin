@@ -1,0 +1,15 @@
+{
+  "doc": "topics-pool",
+  "schema_version": "2.0",
+  "status": "v0.1",
+  "source": "placeholder",
+  "last_updated": "2026-05-16",
+  "note": "Structure-only placeholder. NO real search volumes or rankings. Real topics must be added by Janson from real keyword/market analysis in Obsidian /01-GEO市场分析 and synced here per asg-obsidian-knowledge-base-standards.md. All rows below are structural examples only.",
+  "topics": [
+    { "id": "TOPIC-uk-suppliers", "term": "uk dropshipping suppliers", "pool_status": "active", "priority": "P0", "cluster": "uk-suppliers", "article_refs": ["#44"], "last_article_date": null, "performance_note": null, "next_action": "KEEP; quarterly review whether to upgrade to pillar", "verified": false, "usage_count": 0 },
+    { "id": "TOPIC-dropshipping-agent", "term": "dropshipping agent", "pool_status": "observed", "priority": "P1", "cluster": "agent-service", "article_refs": ["#44"], "last_article_date": null, "performance_note": null, "next_action": "Observe first-month GSC; promote to active if metrics meet bar", "verified": false, "usage_count": 0 },
+    { "id": "TOPIC-uk-shipping-cost", "term": "uk dropshipping shipping cost", "pool_status": "new", "priority": "P2", "cluster": "uk-suppliers", "article_refs": [], "last_article_date": null, "performance_note": null, "next_action": "Await Filter assessment for production", "verified": false, "usage_count": 0 },
+    { "id": "TOPIC-private-label", "term": "private label dropshipping", "pool_status": "new", "priority": "P3", "cluster": "brand-build", "article_refs": [], "last_article_date": null, "performance_note": null, "next_action": "Low-priority candidate; not scheduled", "verified": false, "usage_count": 0 },
+    { "id": "TOPIC-aliexpress-2024", "term": "aliexpress dropshipping 2024", "pool_status": "retired", "priority": "P3", "cluster": "legacy", "article_refs": ["#5"], "last_article_date": null, "performance_note": null, "next_action": "Retired (stale year, low intent); ID kept, not recycled", "verified": false, "usage_count": 0 }
+  ]
+}

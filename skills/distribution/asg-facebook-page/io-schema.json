@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://asg-content-os/skills/asg-facebook-page/io-schema.json",
+  "title": "asg-facebook-page I/O contract",
+  "x-envelope-skill-enum-todo": "asg-facebook-page must be added to schemas/envelope.schema.json properties.skill.enum by the integrator",
+  "allOf": [{ "$ref": "https://asg-content-os/schemas/envelope.schema.json" }],
+  "properties": {
+    "skill": { "const": "asg-facebook-page" },
+    "input": {
+      "type": "object",
+      "required": ["draft", "publish_package", "article_type", "language"],
+      "additionalProperties": false,
+      "properties": {
+        "draft": { "type": "string", "minLength": 1, "description": "Published article html from dossier.draft.html." },
+        "publish_package": {
+          "type": "object",
+          "required": ["canonical_url"],
+          "additionalProperties": true,
+          "properties": {
+            "canonical_url": { "type": "string", "minLength": 1 },
+            "meta_variants": { "type": "array", "items": { "type": "object" } }
+          }
+        },
+        "article_type": { "type": "string", "enum": ["pillar", "share", "response"] },
+        "language": { "type": "string", "enum": ["en-GB", "en-US"] },
+        "source_library_refs": {
+          "type": "array",
+          "description": "Library IDs already present in the source article; adapter may only reuse from this set, never add new.",
+          "items": { "type": "string", "pattern": "^(FACT|CASE|SOURCE|VOICE|TOPIC)-[A-Za-z0-9-]+$" }
+        }
+      }
+    },
+    "output": {
+      "type": "object",
+      "required": ["post", "library_refs", "decision"],
+      "additionalProperties": false,
+      "properties": {
+        "post": {
+          "type": "object",
+          "required": ["hook", "body", "soft_cta", "link"],
+          "additionalProperties": false,
+          "properties": {
+            "hook": { "type": "string", "minLength": 1, "description": "1-2 sentence Janson first-person hook reused from source." },
+            "body": { "type": "string", "minLength": 1, "description": "Distilled value paragraph; length governed by publishing-gate §A 适配分发 row." },
+            "soft_cta": { "type": "string", "minLength": 1 },
+            "link": { "type": "string", "minLength": 1 },
+            "hashtags": { "type": "array", "items": { "type": "string" }, "maxItems": 5 }
+          }
+        },
+        "library_refs": {
+          "type": "array",
+          "description": "Subset of input.source_library_refs actually carried into the post. Never a superset.",
+          "items": { "type": "string", "pattern": "^(FACT|CASE|SOURCE|VOICE|TOPIC)-[A-Za-z0-9-]+$" }
+        },
+        "decision": { "type": "string", "enum": ["ok", "flagged", "error"] },
+        "notes": { "type": "array", "items": { "type": "string" } }
+      }
+    }
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://asg-content-os/skills/asg-platform-polisher/io-schema.json",
+  "title": "asg-platform-polisher I/O contract",
+  "x-envelope-skill-enum-todo": "asg-platform-polisher must be added to schemas/envelope.schema.json properties.skill.enum by the integrator",
+  "allOf": [{ "$ref": "https://asg-content-os/schemas/envelope.schema.json" }],
+  "properties": {
+    "skill": { "const": "asg-platform-polisher" },
+    "input": {
+      "type": "object",
+      "required": ["platform", "content", "link", "article_type", "language"],
+      "additionalProperties": false,
+      "properties": {
+        "platform": {
+          "type": "string",
+          "enum": ["facebook-page", "facebook-groups", "twitter-thread", "linkedin", "short-video"],
+          "description": "Target platform whose conventions this pass enforces."
+        },
+        "content": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Upstream platform draft/script to polish (from facebook-page / facebook-groups / short-video-scripter, or a twitter/linkedin draft)."
+        },
+        "link": { "type": "string", "minLength": 1, "description": "Canonical article URL to place per platform rule." },
+        "article_type": { "type": "string", "enum": ["pillar", "share", "response"] },
+        "language": { "type": "string", "enum": ["en-GB", "en-US"] },
+        "source_library_refs": {
+          "type": "array",
+          "description": "Library IDs already present in the source article; polisher may only reuse from this set, never add new.",
+          "items": { "type": "string", "pattern": "^(FACT|CASE|SOURCE|VOICE|TOPIC)-[A-Za-z0-9-]+$" }
+        }
+      }
+    },
+    "output": {
+      "type": "object",
+      "required": ["polished", "changes", "library_refs", "decision"],
+      "additionalProperties": false,
+      "properties": {
+        "polished": {
+          "type": "object",
+          "required": ["content", "link", "link_placement", "char_count"],
+          "additionalProperties": false,
+          "properties": {
+            "content": { "type": "string", "minLength": 1, "description": "Final per-platform polished copy; length governed by publishing-gate §A 适配分发 row + platform norms." },
+            "hashtags": { "type": "array", "items": { "type": "string" }, "maxItems": 5 },
+            "link": { "type": "string", "minLength": 1 },
+            "link_placement": {
+              "type": "string",
+              "enum": ["in-post", "first-comment", "last-tweet"],
+              "description": "facebook-groups=first-comment; twitter-thread=last-tweet; otherwise in-post."
+            },
+            "char_count": { "type": "integer", "minimum": 0, "description": "Final content length after platform-length adaptation." }
+          }
+        },
+        "changes": {
+          "type": "array",
+          "description": "Polish actions applied, e.g. length-trimmed, tone-recalibrated, hashtags-added, link-moved-first-comment, locale-fixed.",
+          "items": { "type": "string" }
+        },
+        "library_refs": {
+          "type": "array",
+          "description": "Subset of input.source_library_refs actually carried into the polished copy. Never a superset.",
+          "items": { "type": "string", "pattern": "^(FACT|CASE|SOURCE|VOICE|TOPIC)-[A-Za-z0-9-]+$" }
+        },
+        "decision": { "type": "string", "enum": ["ok", "flagged", "error"] },
+        "notes": { "type": "array", "items": { "type": "string" } }
+      }
+    }
+  }
+}

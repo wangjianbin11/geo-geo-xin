@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://asg-content-os/skills/asg-facebook-groups/io-schema.json",
+  "title": "asg-facebook-groups I/O contract",
+  "x-envelope-skill-enum-todo": "asg-facebook-groups must be added to schemas/envelope.schema.json properties.skill.enum by the integrator",
+  "allOf": [{ "$ref": "https://asg-content-os/schemas/envelope.schema.json" }],
+  "properties": {
+    "skill": { "const": "asg-facebook-groups" },
+    "input": {
+      "type": "object",
+      "required": ["draft", "publish_package", "article_type", "language"],
+      "additionalProperties": false,
+      "properties": {
+        "draft": { "type": "string", "minLength": 1, "description": "Published article html from dossier.draft.html." },
+        "publish_package": {
+          "type": "object",
+          "required": ["canonical_url"],
+          "additionalProperties": true,
+          "properties": {
+            "canonical_url": { "type": "string", "minLength": 1 },
+            "meta_variants": { "type": "array", "items": { "type": "object" } }
+          }
+        },
+        "article_type": { "type": "string", "enum": ["pillar", "share", "response"] },
+        "language": { "type": "string", "enum": ["en-GB", "en-US"] },
+        "source_library_refs": {
+          "type": "array",
+          "description": "Library IDs already present in the source article; adapter may only reuse from this set, never add new.",
+          "items": { "type": "string", "pattern": "^(FACT|CASE|SOURCE|VOICE|TOPIC)-[A-Za-z0-9-]+$" }
+        }
+      }
+    },
+    "output": {
+      "type": "object",
+      "required": ["post", "anti_spam_flags", "library_refs", "decision"],
+      "additionalProperties": false,
+      "properties": {
+        "post": {
+          "type": "object",
+          "required": ["opener", "value_points", "link", "link_placement"],
+          "additionalProperties": false,
+          "properties": {
+            "opener": { "type": "string", "minLength": 1, "description": "Conversational first-person experience opener, no slogans." },
+            "value_points": { "type": "array", "minItems": 1, "maxItems": 3, "items": { "type": "string" } },
+            "link": { "type": "string", "minLength": 1 },
+            "link_placement": { "type": "string", "enum": ["first-comment", "in-post"], "default": "first-comment" }
+          }
+        },
+        "anti_spam_flags": {
+          "type": "array",
+          "description": "Hard-sell / spam patterns detected and rewritten, e.g. dm-me-removed, link-in-bio-removed, price-pitch-removed.",
+          "items": { "type": "string" }
+        },
+        "library_refs": {
+          "type": "array",
+          "description": "Subset of input.source_library_refs actually carried into the post. Never a superset.",
+          "items": { "type": "string", "pattern": "^(FACT|CASE|SOURCE|VOICE|TOPIC)-[A-Za-z0-9-]+$" }
+        },
+        "decision": { "type": "string", "enum": ["ok", "flagged", "error"] },
+        "notes": { "type": "array", "items": { "type": "string" } }
+      }
+    }
+  }
+}

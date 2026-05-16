@@ -1,0 +1,119 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://asg-content-os/skills/asg-monthly-auditor/io-schema.json",
+  "title": "asg-monthly-auditor I/O contract",
+  "x-envelope-skill-enum-todo": "asg-monthly-auditor must be added to schemas/envelope.schema.json properties.skill.enum by the integrator",
+  "allOf": [{ "$ref": "https://asg-content-os/schemas/envelope.schema.json" }],
+  "properties": {
+    "skill": { "const": "asg-monthly-auditor" },
+    "article_id": { "type": "string", "pattern": "^ASG-MA-[0-9]{4}-[0-9]{2}$", "description": "Override: monthly-auditor uses month task id, e.g. ASG-MA-2026-05 (relaxes envelope ^ASG-[0-9]{3,}$ for this non-article feedback task)." },
+    "input": {
+      "type": "object",
+      "required": ["month", "articles"],
+      "additionalProperties": false,
+      "properties": {
+        "month": { "type": "string", "pattern": "^[0-9]{4}-[0-9]{2}$", "description": "Audited month, YYYY-MM, e.g. 2026-05" },
+        "articles": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["ref", "primary_kw"],
+            "additionalProperties": false,
+            "properties": {
+              "ref": { "type": "string", "description": "e.g. #44" },
+              "primary_kw": { "type": "string" },
+              "topic_id": { "type": ["string", "null"], "pattern": "^TOPIC-[A-Za-z0-9-]+$", "description": "Linked Topics Pool id, e.g. TOPIC-uk-suppliers" },
+              "metrics": {
+                "type": ["object", "null"],
+                "description": "Janson-supplied GSC-style monthly metrics. NEVER fabricated by the skill. Absent/null for any article -> degraded basic mode.",
+                "additionalProperties": false,
+                "properties": {
+                  "clicks": { "type": ["integer", "null"], "minimum": 0 },
+                  "impressions": { "type": ["integer", "null"], "minimum": 0 },
+                  "avg_position": { "type": ["number", "null"], "minimum": 0 },
+                  "featured_snippet": { "type": ["boolean", "null"] },
+                  "ai_cited": { "type": ["boolean", "null"] },
+                  "inquiries": { "type": ["integer", "null"], "minimum": 0 }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "output": {
+      "type": "object",
+      "required": ["mode", "audited", "topics_pool_actions", "rulebook_revision_proposals", "library_writeback", "csv_path", "report_path"],
+      "additionalProperties": false,
+      "properties": {
+        "mode": { "type": "string", "enum": ["full", "basic"], "description": "full = all articles had Janson metrics. basic = degraded (metrics missing); envelope status must be flagged." },
+        "audited": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["ref", "action", "priority"],
+            "additionalProperties": false,
+            "properties": {
+              "ref": { "type": "string" },
+              "clicks": { "type": ["integer", "null"] },
+              "impressions": { "type": ["integer", "null"] },
+              "avg_position": { "type": ["number", "null"] },
+              "featured_snippet": { "type": ["boolean", "null"] },
+              "ai_cited": { "type": ["boolean", "null"] },
+              "inquiries": { "type": ["integer", "null"] },
+              "action": { "type": "string", "enum": ["KEEP", "UPGRADE", "REWRITE", "KILL"] },
+              "priority": { "type": "string", "enum": ["P0", "P1", "P2", "P3"] },
+              "topic_id": { "type": ["string", "null"], "pattern": "^TOPIC-[A-Za-z0-9-]+$" }
+            }
+          }
+        },
+        "topics_pool_actions": {
+          "type": "array",
+          "description": "Per-topic pool updates + new TOPIC- proposals. Skill never auto-edits the Library; these are instructions.",
+          "items": {
+            "type": "object",
+            "required": ["topic_id", "set_pool_status"],
+            "additionalProperties": false,
+            "properties": {
+              "topic_id": { "type": "string", "pattern": "^TOPIC-[A-Za-z0-9-]+$" },
+              "set_pool_status": { "type": "string", "enum": ["new", "observed", "active", "retired"] },
+              "is_new_proposal": { "type": "boolean", "default": false },
+              "rationale": { "type": "string" }
+            }
+          }
+        },
+        "rulebook_revision_proposals": {
+          "type": "array",
+          "description": "Proposals only. Skill never auto-edits rulebooks; monthly human merge per publishing-gate §C / geo-standards §8.",
+          "items": {
+            "type": "object",
+            "required": ["target_doc", "section", "change"],
+            "additionalProperties": false,
+            "properties": {
+              "target_doc": { "type": "string", "enum": ["asg-publishing-gate", "asg-geo-standards", "asg-voice-bible", "asg-content-constitution"] },
+              "section": { "type": "string" },
+              "change": { "type": "string" },
+              "evidence": { "type": "string" }
+            }
+          }
+        },
+        "library_writeback": {
+          "type": "array",
+          "description": "Batch usage_count writeback instructions for libraries; executed by the monthly human audit, not the skill in real time.",
+          "items": {
+            "type": "object",
+            "required": ["library_id", "usage_count_delta"],
+            "additionalProperties": false,
+            "properties": {
+              "library_id": { "type": "string", "pattern": "^(FACT|CASE|SOURCE|VOICE|TOPIC)-[A-Za-z0-9-]+$" },
+              "usage_count_delta": { "type": "integer", "minimum": 0 }
+            }
+          }
+        },
+        "csv_path": { "type": "string", "pattern": "^data/articles-performance-[0-9]{4}-[0-9]{2}\\.csv$", "description": "Const-ish per stock-auditor: data/articles-performance-<month>.csv, e.g. data/articles-performance-2026-05.csv" },
+        "report_path": { "type": "string", "description": "e.g. obsidian:/01-GEO市场分析/MONTH-2026-05.md" }
+      }
+    }
+  }
+}

@@ -33,7 +33,12 @@
         "asg-editorial-gate",
         "asg-voice-checker",
         "asg-geo-benchmarker",
-        "asg-stock-auditor"
+        "asg-stock-auditor",
+        "asg-monthly-auditor",
+        "asg-facebook-page",
+        "asg-facebook-groups",
+        "asg-short-video-scripter",
+        "asg-platform-polisher"
       ]
     },
     "skill_version": {

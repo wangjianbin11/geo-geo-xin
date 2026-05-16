@@ -1,0 +1,40 @@
+{
+  "skill": "asg-facebook-page",
+  "skill_version": "0.1.0",
+  "note": "v0.1 acceptance: channel adaptation only, Library ID conservation, no fabrication.",
+  "cases": [
+    {
+      "name": "ASG-044 UK pillar -> page post reuses anchor, refs are subset",
+      "input": {
+        "article_type": "pillar",
+        "language": "en-GB",
+        "publish_package": { "canonical_url": "https://example.com/uk-dropshipping-suppliers" },
+        "source_library_refs": ["FACT-021", "CASE-007", "SOURCE-001"],
+        "draft": "<article><p>After 8 years fulfilling UK orders, the real cost of dropshipping suppliers is in the split. We turned one store's per-order cost from a documented figure (CASE-007) down hard.</p></article>"
+      },
+      "expect": { "decision": "ok", "library_refs_subset_of_source": true, "hook_is_first_person": true }
+    },
+    {
+      "name": "response type -> heavily distilled short body, soft CTA only",
+      "input": {
+        "article_type": "response",
+        "language": "en-GB",
+        "publish_package": { "canonical_url": "https://example.com/do-i-need-uk-supplier" },
+        "source_library_refs": ["FACT-021"],
+        "draft": "<article><p>Short answer from 8 years of fulfilment: yes, if your customers are UK-based. Here is the why.</p></article>"
+      },
+      "expect": { "decision": "ok", "body_shorter_than_pillar": true, "no_hard_sell": true }
+    },
+    {
+      "name": "fabrication refused (unsourced ASG number requested)",
+      "input": {
+        "article_type": "share",
+        "language": "en-US",
+        "publish_package": { "canonical_url": "https://example.com/us-suppliers" },
+        "source_library_refs": ["FACT-002"],
+        "draft": "<article><p>We document our US fulfilment numbers in FACT-002. The article makes no claim about a 47% margin uplift.</p></article>"
+      },
+      "expect": { "decision": "flagged", "notes_include": "fabrication-refused", "library_refs": ["FACT-002"] }
+    }
+  ]
+}
