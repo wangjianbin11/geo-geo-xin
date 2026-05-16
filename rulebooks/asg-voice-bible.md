@@ -52,11 +52,15 @@ enforced_by: [asg-seo-writer-v2, asg-voice-checker]
 - `After {N} years of {doing X}, ...`
 - `Across {5,000+ stores / 5M+ orders}, the pattern is ...`
 - `I've watched {hundreds of stores} {make this mistake / get this right} ...`
-- `We documented this internally [FACT-XXX]: ...`
-- `In one case [CASE-XXX], a {industry} store in {country} ...`
+- `We documented this internally [ASG-TEAM-XXX]: ...`
+- `In one case [ASG-CASE-XXX], a {industry} store in {country} ...`
 - `The first quarter a client works with us, the thing that breaks is usually ...`
 
 约束:同一篇内同一模板不超过 2 次;每个锚最好挂一个 Library ID。
+ASG 数据/案例锚用 canonical `ASG-{CATEGORY}-{NNN}`(在
+`libraries/facts/asg-verified-data-library.json` 可解析);引用时**优先用
+`claim_en`——它就是 canonical 英文措辞,不要自行改写**(范围值保持范围)。
+ID 方案见 `data/migrations/id-crosswalk.md`。
 
 ---
 
@@ -95,7 +99,9 @@ optimisation of logistics routing may potentially yield benefits." ← 一句话
 ## Section 6 | 数据呈现风格
 
 - 数字优先具体到可核查粒度:"£1.85 → £0.92 per order",不说 "significantly cheaper"。
-- 每个关键数字尽量挂 Library ID 或来源。
+- 每个关键数字尽量挂 Library ID 或来源。ASG 数据用 canonical `ASG-{CATEGORY}-{NNN}`
+  (`[ASG-TEAM-XXX]` / `[ASG-CASE-XXX]` 等),引用其 `claim_en` 作为 canonical
+  英文措辞;`value` 为区间的(如 10,000–20,000)保持区间,不取中点。
 - 对照用表格(before/after / 选项对比),不用一长段文字描述差异。
 - 百分比与绝对值并给一次:"a 50% reduction (≈ £20,088/yr protected)"。
 
@@ -122,7 +128,7 @@ optimisation of logistics routing may potentially yield benefits." ← 一句话
 
 > "A jewelry store in the US, ~$8K/month, kept losing customers to delivery
 > complaints. We moved them to [ASG role]. Twelve weeks later: $8K → $42K
-> [CASE-002]."
+> [ASG-CASE-XXX]."
 
 禁止:无数字的成功故事;无 ASG 介入点的"客户自己变好了"。
 

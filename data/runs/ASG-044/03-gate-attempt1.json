@@ -9,11 +9,11 @@
   "status": "blocked",
   "next_skill": null,
   "human_gate": true,
-  "library_refs": ["FACT-001", "CASE-007", "CASE-001"],
+  "library_refs": ["ASG-TEAM-001", "ASG-CASE-002", "ASG-CASE-003"],
   "input": {
     "article_type": "pillar",
     "keyword_spec": { "mode": "full" },
-    "draft": { "asset_manifest": { "external_links": ["SOURCE-001", "SOURCE-002", "SOURCE-003", "SOURCE-010", "SOURCE-011", "SOURCE-020"], "asg_data_refs": ["FACT-001", "CASE-007"] }, "schema_blocks": ["Article", "FAQPage", "BreadcrumbList", "HowTo"] }
+    "draft": { "asset_manifest": { "external_links": ["SOURCE-001", "SOURCE-002", "SOURCE-003", "SOURCE-010", "SOURCE-011", "SOURCE-020"], "asg_data_refs": ["ASG-TEAM-001", "ASG-CASE-002"] }, "schema_blocks": ["Article", "FAQPage", "BreadcrumbList", "HowTo"] }
   },
   "output": {
     "checks": [

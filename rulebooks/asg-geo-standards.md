@@ -36,7 +36,7 @@ calibrated_by: [asg-geo-benchmarker]
 **正例.**
 > **Short answer:** UK dropshipping suppliers typically add £0.9–£1.9 per order
 > in shipping alone. The lever that moves it most is parcel routing, not unit
-> price — we cut one store from £1.85 to £0.92 [CASE-007].
+> price — we cut one store from £1.85 to £0.92 [ASG-CASE-XXX].
 
 **反例.** H2 后直接进入背景铺垫,200 词后才给结论。AI 抽不到可引用句。
 
@@ -79,9 +79,13 @@ voice/structure 联检。
 ## Section 6 | 实体与权威信号
 
 **声明.** 明确实体(ASG、地名、法规机构、载体)+ 第一人称经验锚 + 外部权威源
-(SOURCE-*)。AI 更倾向引用"有主体、有出处、有具体数字"的段落。
+(SOURCE-*)。AI 更倾向引用"有主体、有出处、有具体数字"的段落。ASG 运营数据/
+案例锚用 canonical `ASG-{CATEGORY}-{NNN}`(在
+`libraries/facts/asg-verified-data-library.json` 可解析,含 `ASG-CASE-*`);外部
+权威源仍用 `SOURCE-*`。ID 方案见 `data/migrations/id-crosswalk.md`。
 
-**如何检测.** Gate 6(ASG 数据 ID)+ Gate 5(外链)+ voice-checker 检查 2(经验锚)。
+**如何检测.** Gate 6(ASG 数据 ID,`ASG-*` 解析至 verified data library)+
+Gate 5(外链)+ voice-checker 检查 2(经验锚)。
 
 ---
 

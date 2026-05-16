@@ -9,7 +9,7 @@
   "status": "ok",
   "next_skill": "asg-editorial-gate",
   "human_gate": true,
-  "library_refs": ["FACT-001", "FACT-002", "FACT-010", "FACT-011", "FACT-020", "FACT-021", "FACT-031", "FACT-040", "FACT-041", "FACT-042", "CASE-001", "CASE-007", "SOURCE-001", "SOURCE-002", "SOURCE-003", "SOURCE-010", "SOURCE-011", "SOURCE-020", "SOURCE-030"],
+  "library_refs": ["ASG-CORP-002", "ASG-TEAM-001", "ASG-TEAM-003", "ASG-TEAM-008", "ASG-SERVICE-001", "ASG-QC-001", "ASG-LOGISTICS-002", "ASG-LOGISTICS-001", "ASG-SUPPLY-001", "ASG-SUPPLY-007", "ASG-COMPARE-001", "ASG-CASE-002", "ASG-CASE-003", "SOURCE-001", "SOURCE-002", "SOURCE-003", "SOURCE-010", "SOURCE-011", "SOURCE-020", "SOURCE-030"],
   "input": {
     "phase": "draft",
     "article_type": "pillar",
@@ -24,15 +24,15 @@
       "asset_manifest": {
         "internal_links": ["#37", "#42", "#43", "#1"],
         "external_links": ["SOURCE-001", "SOURCE-002", "SOURCE-003", "SOURCE-010", "SOURCE-011", "SOURCE-020"],
-        "asg_data_refs": ["FACT-001", "FACT-002", "FACT-010", "FACT-011", "FACT-020", "FACT-021", "FACT-040", "FACT-041", "FACT-042", "CASE-007", "CASE-001"]
+        "asg_data_refs": ["ASG-TEAM-001", "ASG-TEAM-003", "ASG-QC-001", "ASG-LOGISTICS-002", "ASG-LOGISTICS-001", "ASG-CORP-002", "ASG-SERVICE-001", "ASG-TEAM-008", "ASG-SUPPLY-001", "ASG-SUPPLY-007", "ASG-COMPARE-001", "ASG-CASE-002", "ASG-CASE-003"]
       },
       "h2_blocks": [
-        { "heading": "What UK dropshipping suppliers actually cost", "library_refs": ["CASE-007", "FACT-021"], "has_answer_block": true, "has_key_takeaway": true },
-        { "heading": "How we vet UK-facing suppliers", "library_refs": ["FACT-001", "FACT-010"], "has_answer_block": true, "has_key_takeaway": true },
-        { "heading": "DDP and VAT realities for UK delivery", "library_refs": ["SOURCE-001", "FACT-021"], "has_answer_block": true, "has_key_takeaway": true },
-        { "heading": "Lead times you can promise customers", "library_refs": ["FACT-021", "FACT-031"], "has_answer_block": true, "has_key_takeaway": true },
-        { "heading": "A real UK shipping cost turnaround", "library_refs": ["CASE-007"], "has_answer_block": true, "has_key_takeaway": true },
-        { "heading": "Scaling a UK store without breaking fulfilment", "library_refs": ["CASE-001", "FACT-041"], "has_answer_block": true, "has_key_takeaway": true }
+        { "heading": "What UK dropshipping suppliers actually cost", "library_refs": ["ASG-CASE-002", "ASG-LOGISTICS-002"], "has_answer_block": true, "has_key_takeaway": true },
+        { "heading": "How we vet UK-facing suppliers", "library_refs": ["ASG-SUPPLY-001", "ASG-QC-001"], "has_answer_block": true, "has_key_takeaway": true },
+        { "heading": "DDP and VAT realities for UK delivery", "library_refs": ["SOURCE-001", "ASG-LOGISTICS-002"], "has_answer_block": true, "has_key_takeaway": true },
+        { "heading": "Lead times you can promise customers", "library_refs": ["ASG-LOGISTICS-002", "ASG-LOGISTICS-001"], "has_answer_block": true, "has_key_takeaway": true },
+        { "heading": "A real UK shipping turnaround after switching", "library_refs": ["ASG-CASE-002", "ASG-CASE-003"], "has_answer_block": true, "has_key_takeaway": true },
+        { "heading": "Scaling a UK store without breaking fulfilment", "library_refs": ["ASG-CASE-002", "ASG-SERVICE-001"], "has_answer_block": true, "has_key_takeaway": true }
       ],
       "schema_blocks": ["Article", "FAQPage", "BreadcrumbList", "HowTo"],
       "title_options": [

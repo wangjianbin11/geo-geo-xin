@@ -47,8 +47,8 @@ scale is QC variance."
 **正例.** "A UK fashion store doing roughly £5K–£10K/month…"
 **反例.** "BrandX Ltd (owner John, john@brandx.com) was…"
 
-**如何检测.** Gate 9 PII 正则扫(email/phone/URL/@handle)+ CASE 引用须来自
-Cases Library(已脱敏)。命中 → BLOCK。
+**如何检测.** Gate 9 PII 正则扫(email/phone/URL/@handle)+ 案例引用须来自
+verified data library 的 `customer_cases`(`ASG-CASE-*`,已核验脱敏)。命中 → BLOCK。
 
 ---
 
@@ -99,9 +99,12 @@ math."
 
 ## Section 6 | 数据真实性(实现宪法 Art.4,与 Gate 6 协同)
 
-**声明.** 任何 ASG 运营数字必须 Library ID 可溯源。无 ID 的 ASG 数字 = 合规事故。
+**声明.** 任何 ASG 运营数字必须 Library ID 可溯源(canonical `ASG-{CATEGORY}-{NNN}`,
+如 `[ASG-TEAM-001]` / `[ASG-CASE-002]`,在
+`libraries/facts/asg-verified-data-library.json` 可解析)。无 ID 的 ASG 数字 = 合规事故。
 
 **如何检测.** 由 asg-editorial-gate **Gate 6**(硬 BLOCK)主检;本节为合规口径声明。
+ID 方案见 `data/migrations/id-crosswalk.md`。
 
 ---
 

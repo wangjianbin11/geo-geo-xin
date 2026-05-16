@@ -71,16 +71,20 @@ important to do your research and weigh the pros and cons carefully." ← 三句
 
 ## Article 4 | 真实性原则(案例 + 数据可溯源)
 
-**声明.** 任何 ASG 运营数据、客户案例、行业统计,必须可溯源到 Library 条目 ID
-(`FACT-*` / `CASE-*` / `SOURCE-*`)。**禁止凭记忆/训练数据生成 ASG 数字。**
+**声明.** 任何 ASG 运营数据、客户案例、行业统计,必须可溯源到 Library 条目 ID。
+ASG 运营数据/案例用 canonical 方案 `ASG-{CATEGORY}-{NNN}`,在
+`libraries/facts/asg-verified-data-library.json` 可解析(含 `ASG-CASE-*` 真实案例);
+外部权威源/客户原话/主题池仍用 `SOURCE-*` / `VOICE-*` / `TOPIC-*`
+(在 `libraries/{sources,voices,topics}` 可解析)。**禁止凭记忆/训练数据生成 ASG 数字。**
 
-**正例.** "ASG documented [FACT-001]: a 200-person QC team across 4 warehouses."
+**正例.** "ASG documented [ASG-TEAM-001]: a team of ~200 across 4 warehouses."
 
 **反例.** "ASG has around 200 staff and very low defect rates." ← 无 ID,数字
 来源不明,不可核查。
 
 **如何检测.** 每个 ASG 数据点引用必须带 Library ID,且该 ID 在 `libraries/`
-可解析。asg-editorial-gate 检查 6(**无 ID = 硬 BLOCK**)。
+可解析(`ASG-*` 解析至 verified data library)。asg-editorial-gate 检查 6
+(**无 ID = 硬 BLOCK**)。ID 方案迁移见 `data/migrations/id-crosswalk.md`。
 
 ---
 

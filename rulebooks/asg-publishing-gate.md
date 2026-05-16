@@ -32,7 +32,7 @@ also_referenced_by: [asg-strategic-filter, asg-keyword-researcher, asg-seo-write
 | 主词密度 primary_kw_density | 1.0–1.5% | 1.0–2.0% | 1.5–2.0% |
 | 共现词密度 cooccur_density | 0.5–1.0% | 0.5% | 0.3% |
 | ASG 数据引用 asg_data_refs | ≥ 9 | ≥ 5 | ≥ 3 |
-| 案例引用 case_refs | ≥ 2 | ≥ 1 | ≥ 1 |
+| 案例引用 case_refs(= `ASG-CASE-*` 计数) | ≥ 2 | ≥ 1 | ≥ 1 |
 | Schema | Article+FAQ+Breadcrumb+HowTo/ItemList | Article+FAQ+Breadcrumb+ItemList | Article+FAQ+Breadcrumb |
 | 流程步数 | 28(完整) | 25 | 22 |
 | 适配分发 | 长视频+5 平台 | 短视频+Twitter thread | 短视频+FAQ 拆解 |
@@ -69,8 +69,12 @@ keyword_spec 要求的 6–10 个共现词须 100% 出现。
 
 ### Gate 6 — ASG 数据 Library ID 标注 ★硬伤
 每个 "ASG documented…/案例引用" 必须带 Library ID,且 ID 在 `libraries/` 可解析。
+ASG 运营数据/案例用 canonical `ASG-{CATEGORY}-{NNN}`,对
+`libraries/facts/asg-verified-data-library.json` 解析(`ASG-CASE-*` 即真实客户案例);
+`SOURCE-*` / `VOICE-*` / `TOPIC-*` 对 `libraries/{sources,voices,topics}` 解析。
 - **任一引用无 ID 或 ID 解析失败 → 直接 BLOCK(不容讨论)。**
-- 数量同时按 §A `asg_data_refs` / `case_refs` 下限核查;不足 → BLOCK。
+- 数量同时按 §A `asg_data_refs` / `case_refs`(= `ASG-CASE-*` 计数)下限核查;不足 → BLOCK。
+- ID 方案迁移对照见 `data/migrations/id-crosswalk.md`。
 
 ### Gate 7 — 每个 H2 结构完整性
 每个 H2 必须含:GEO Answer Block + Key Takeaway 段 + ≥1 个表格/列表/案例 +
@@ -116,7 +120,7 @@ v0.1 校准说明(方案 13.1 #4):初版**故意放宽约 20%**——Gate 2 容�
 |---|---|
 | 1 | "主词缺失位置:{list}。建议:Title 改为 '{kw} …';H2#{n} 注入主词。" |
 | 3 | "缺共现词:{list}。建议在 H2#{n} 段 {k} 自然嵌入。" |
-| 6 | "引用 '{quote}' 无 Library ID。匹配候选:{FACT/CASE ids}。请绑定或删除该数据声明。" |
+| 6 | "引用 '{quote}' 无 Library ID。匹配候选:{ASG-{CAT}-{NNN} ids,如 ASG-TEAM-001 / ASG-CASE-002}。请绑定或删除该数据声明。" |
 | 7 | "H2#{n} 缺 {Key Takeaway / 权威源 / 结构块}。已生成占位模板,需填实。" |
 | 8 | "段落 P{n} 共 {x} 句(>5)。建议在第 {k} 句后拆段。" |
 
