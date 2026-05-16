@@ -1,0 +1,17 @@
+{
+  "doc": "asg-cases",
+  "schema_version": "2.0",
+  "status": "v0.1",
+  "source": "v2-plan-seed",
+  "last_updated": "2026-05-16",
+  "note": "before/after from v2 plan; details are template placeholders pending Janson's real-case fill + verification.",
+  "cases": [
+    { "id": "CASE-001", "title": "UK brand growth", "industry": "UK ecommerce", "cluster": "UK", "before": "£5,500/mo", "after": "£42,000/mo", "metric": "~7.6x revenue", "asg_role": "TBD", "verified": false, "usage_count": 0, "applies_to": ["pillar", "share"] },
+    { "id": "CASE-002", "title": "Jewelry brand", "industry": "US jewelry", "cluster": "jewelry", "before": "$8,000/mo", "after": "$42,000/mo", "metric": "~5.25x revenue", "related_facts": ["FACT-011"], "asg_role": "TBD", "verified": false, "usage_count": 0, "applies_to": ["pillar", "share"] },
+    { "id": "CASE-003", "title": "Apparel brand", "industry": "apparel", "cluster": null, "before": "$15,000/mo", "after": "$80,000/mo", "metric": "~5.3x revenue", "asg_role": "TBD", "verified": false, "usage_count": 0, "applies_to": ["pillar", "share"] },
+    { "id": "CASE-004", "title": "Banking/cashflow scenario (semantics TBD)", "industry": "TBD", "cluster": null, "before": "$15,000", "after": "$80,000", "metric": "TBD", "asg_role": "TBD", "verified": false, "usage_count": 0, "applies_to": ["pillar"] },
+    { "id": "CASE-005", "title": "1688 sourcing optimization", "industry": "cross-border sourcing", "cluster": null, "before": "$42,000", "after": "$68,000", "metric": "~1.6x", "asg_role": "TBD", "verified": false, "usage_count": 0, "applies_to": ["pillar", "share", "response"] },
+    { "id": "CASE-006", "title": "Black Friday peak scaling", "industry": "peak-season", "cluster": null, "before": "$80,000", "after": "$245,000", "metric": "~3x peak", "related_facts": ["FACT-030", "FACT-031"], "asg_role": "TBD", "verified": false, "usage_count": 0, "applies_to": ["pillar", "share"] },
+    { "id": "CASE-007", "title": "UK shipping cost optimization", "industry": "UK logistics", "cluster": "UK", "before": "£1.85/order", "after": "£0.92/order", "metric": "50% cut, ~£20,088/yr protected, 96% on-time", "asg_role": "hybrid routing infrastructure", "verified": false, "usage_count": 0, "applies_to": ["pillar", "share", "response"] }
+  ]
+}

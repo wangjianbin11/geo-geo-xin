@@ -1,0 +1,17 @@
+{
+  "doc": "authority-pool",
+  "schema_version": "2.0",
+  "status": "v0.1",
+  "source": "v2-plan-seed",
+  "last_updated": "2026-05-16",
+  "categories": ["government", "industry-bodies", "carriers", "research", "platforms"],
+  "sources": [
+    { "id": "SOURCE-001", "name": "HMRC", "category": "government", "url": "https://www.gov.uk/", "authority_score": 10, "topics": ["UK VAT", "customs", "DDP"], "last_verified": null, "usage_count": 0, "citation_template": "Per HMRC guidance (verified {date}) [SOURCE-001], {claim}." },
+    { "id": "SOURCE-002", "name": "Companies House", "category": "government", "url": "https://www.gov.uk/government/organisations/companies-house", "authority_score": 10, "topics": ["UK company compliance"], "last_verified": null, "usage_count": 0, "citation_template": "Companies House records [SOURCE-002] show {claim}." },
+    { "id": "SOURCE-003", "name": "FTC", "category": "government", "url": "https://www.ftc.gov/", "authority_score": 10, "topics": ["US advertising", "consumer compliance"], "last_verified": null, "usage_count": 0, "citation_template": "The FTC [SOURCE-003] requires {claim}." },
+    { "id": "SOURCE-010", "name": "Royal Mail", "category": "carriers", "url": "https://www.royalmail.com/", "authority_score": 8, "topics": ["UK last-mile"], "last_verified": null, "usage_count": 0, "citation_template": "Royal Mail [SOURCE-010] {claim}." },
+    { "id": "SOURCE-011", "name": "DHL Express", "category": "carriers", "url": "https://www.dhl.com/", "authority_score": 8, "topics": ["cross-border express"], "last_verified": null, "usage_count": 0, "citation_template": "DHL Express [SOURCE-011] {claim}." },
+    { "id": "SOURCE-020", "name": "Statista", "category": "research", "url": "https://www.statista.com/", "authority_score": 7, "topics": ["industry statistics"], "last_verified": null, "usage_count": 0, "citation_template": "Statista data [SOURCE-020] indicates {claim}." },
+    { "id": "SOURCE-030", "name": "Shopify", "category": "platforms", "url": "https://www.shopify.com/", "authority_score": 7, "topics": ["platform mechanics"], "last_verified": null, "usage_count": 0, "citation_template": "Shopify [SOURCE-030] {claim}." }
+  ]
+}

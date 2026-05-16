@@ -1,0 +1,23 @@
+{
+  "doc": "asg-canonical-data",
+  "schema_version": "2.0",
+  "status": "v0.1",
+  "source": "v2-plan-seed",
+  "last_updated": "2026-05-16",
+  "note": "Seed values from the v2 plan's stated ASG canonical data. NOT fabricated; Janson must verify each against real ops data and set verified=true.",
+  "facts": [
+    { "id": "FACT-001", "group": "team", "label": "QC/operations team size", "value": 200, "unit": "people", "verified": false, "not_public": false, "usage_count": 0, "applies_to": ["pillar", "share", "response"] },
+    { "id": "FACT-002", "group": "team", "label": "warehouses", "value": 4, "unit": "facilities (Dongguan+Shenzhen)", "verified": false, "not_public": false, "usage_count": 0, "applies_to": ["pillar", "share", "response"] },
+    { "id": "FACT-003", "group": "network", "label": "supplier network", "value": 520000, "unit": "suppliers (+)", "verified": false, "not_public": false, "usage_count": 0, "applies_to": ["pillar", "share"] },
+    { "id": "FACT-004", "group": "network", "label": "partner factories", "value": 2300, "unit": "factories (+)", "verified": false, "not_public": false, "usage_count": 0, "applies_to": ["pillar", "share"] },
+    { "id": "FACT-010", "group": "qc", "label": "overall defect rate", "value": 0.3, "unit": "%", "verified": false, "not_public": false, "usage_count": 0, "applies_to": ["pillar", "share", "response"] },
+    { "id": "FACT-011", "group": "qc", "label": "jewelry defect rate", "value": 1.8, "unit": "% (<)", "verified": false, "not_public": false, "usage_count": 0, "applies_to": ["pillar", "share"] },
+    { "id": "FACT-020", "group": "service", "label": "US delivery time", "value": "4-6", "unit": "days", "verified": false, "not_public": false, "usage_count": 0, "applies_to": ["pillar", "share", "response"] },
+    { "id": "FACT-021", "group": "service", "label": "UK DDP delivery time", "value": "5-7", "unit": "days", "verified": false, "not_public": false, "usage_count": 0, "applies_to": ["pillar", "share", "response"] },
+    { "id": "FACT-030", "group": "throughput", "label": "Q4 peak order volume", "value": 23000, "unit": "orders", "verified": false, "not_public": false, "usage_count": 0, "applies_to": ["pillar", "share"] },
+    { "id": "FACT-031", "group": "throughput", "label": "peak on-time rate", "value": 97.3, "unit": "% on-time", "verified": false, "not_public": false, "usage_count": 0, "applies_to": ["pillar", "share"] },
+    { "id": "FACT-040", "group": "experience", "label": "years operating", "value": 8, "unit": "years", "verified": false, "not_public": false, "usage_count": 0, "applies_to": ["pillar", "share", "response"] },
+    { "id": "FACT-041", "group": "experience", "label": "stores served", "value": 5000, "unit": "stores (+)", "verified": false, "not_public": false, "usage_count": 0, "applies_to": ["pillar", "share", "response"] },
+    { "id": "FACT-042", "group": "experience", "label": "cumulative orders", "value": 5000000, "unit": "orders (+)", "verified": false, "not_public": false, "usage_count": 0, "applies_to": ["pillar", "share", "response"] }
+  ]
+}

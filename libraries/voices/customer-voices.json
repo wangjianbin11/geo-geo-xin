@@ -1,0 +1,14 @@
+{
+  "doc": "customer-voices",
+  "schema_version": "2.0",
+  "status": "v0.1",
+  "source": "placeholder",
+  "last_updated": "2026-05-16",
+  "note": "Structure + example shape only. NOT real data. Janson must populate from real anonymized customer conversations; this is the one Library AI cannot seed.",
+  "voices": [
+    { "id": "VOICE-001", "type": "question", "quote": "How long does shipping to the UK actually take?", "frequency": null, "context": "pre-sales", "source": "Email+WhatsApp", "counter_framework": null, "related_article": null, "related_case": null, "verified": false, "usage_count": 0 },
+    { "id": "VOICE-002", "type": "question", "quote": "Do you offer custom packaging?", "frequency": null, "context": "pre-sales", "source": "WhatsApp", "counter_framework": null, "related_article": null, "related_case": null, "verified": false, "usage_count": 0 },
+    { "id": "VOICE-010", "type": "objection", "quote": "AliExpress is cheaper", "frequency": null, "context": "pre-sales", "source": "Sales", "counter_framework": "landed-cost margin math (constitution Art.6)", "related_article": null, "related_case": "CASE-007", "verified": false, "usage_count": 0 },
+    { "id": "VOICE-011", "type": "objection", "quote": "How do I trust you?", "frequency": null, "context": "pre-sales", "source": "Sales", "counter_framework": "8-year track record", "related_facts": ["FACT-040", "FACT-041", "FACT-042"], "related_case": "CASE-001", "verified": false, "usage_count": 0 }
+  ]
+}
