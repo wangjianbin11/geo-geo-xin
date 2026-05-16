@@ -2,6 +2,27 @@
 
 所有版本变更记录于此。版本语义见方案第 10.4 节:初版均为 v0.1(能用,不完美)。
 
+## [Unreleased] — Verified Data Library + 框架复盘加固 (2026-05-16)
+
+### Added
+- `libraries/facts/asg-verified-data-library.json` —— Janson 71 条已核验真实
+  数据(15 类),采纳 `ASG-{CATEGORY}-{NNN}` 为 canonical ID 方案(SSoT)。
+- `data/migrations/id-crosswalk.md` —— 种子 FACT-/CASE- → 真实 ASG-* 权威映射。
+- `workflows/framework-review-2026-05-16.md` —— 资深架构复盘,裁决
+  **GO-WITH-FIXES**,含缺陷清单 + 完成度清单 + 本地交接清单。
+
+### Changed (框架加固,据复盘缺陷清单)
+- envelope/dossier/validator library_ref 模式扩展接受 ASG-{CAT}-{NNN};
+  旧种子库废弃为空 stub,ID 故意不可解析;6 规则文档传播至 canonical 方案;
+  ASG-044 样例迁移到真实 ID。validator ID universe 124,**393/393 全绿**。
+- P0 修复:pipeline-contract §2 / editorial-gate SKILL / 28-step-flow 文件名
+  对齐真实(`03-gate-attempt{N}.json`,无 `06-publish.json`);
+  integration-selfcheck 标 superseded;README 修正 43→真实 73/98 + 12 Skill +
+  6 规则 + 目录树 + 开发状态。
+- P1 修复:publishing-gate Gate 10 基线改真实保留集;Gate 9 + voice-bible §5.1
+  把冲突日志(6,000+/Jason/4.2M-5M)变成机器强制扫描点;obsidian §2.2 登记
+  monthly-auditor 写回;validator docstring 标注"契约门非质量门"。
+
 ## [Unreleased] — 真实数据集成 (2026-05-16, Janson 数据)
 
 > 里程碑:从"骨架 + 种子"进入"真实数据驱动"。Janson 提供 GSC 导出 +

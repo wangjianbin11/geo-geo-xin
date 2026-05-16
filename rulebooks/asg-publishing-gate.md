@@ -85,12 +85,16 @@ ASG 运营数据/案例用 canonical `ASG-{CATEGORY}-{NNN}`,对
 扫描所有段落:无 > 5 句的段落(硬规则);平均 2–4 句。
 - 发现超长段落 → MODIFY(自动拆分建议)。
 
-### Gate 9 — 禁用词 / 合规扫描
-扫 voice-bible §5 禁用词库 + risk-compliance(竞品诋毁 / 客户身份暴露 / 恐吓营销)。
-- 命中禁用词或合规红线 → BLOCK(硬规则)。
+### Gate 9 — 禁用词 / 合规 / 数据冲突扫描
+扫 voice-bible §5 禁用词库 **+ §5.1 数据冲突 token**(`6,000+`/`Jason`/
+4.2M-5M 混用等,来自 Verified Data Library 冲突日志)+ risk-compliance
+(竞品诋毁 / 客户身份暴露 / 恐吓营销)。
+- 命中禁用词、数据冲突 token 或合规红线 → BLOCK(硬规则)。
 
 ### Gate 10 — 重复内容核查
-与已发 43 篇(审计后保留集)对比内容相似度。
+与**存量保留集**对比内容相似度。保留集 = `data/runs/ASG-AUDIT-001/` 真实审计
+(98 页 / 73 文章页)中 recommendation ∈ {KEEP, UPGRADE} 的页面集合,**不是
+早期假设的"43 篇"**(已被真实 GSC 审计修正,见 framework-review §4 P1-3)。
 - 相似度 > 30% → BLOCK;15–30% → MODIFY(差异化建议)。
 
 ---

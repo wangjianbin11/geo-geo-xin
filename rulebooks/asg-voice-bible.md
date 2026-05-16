@@ -94,6 +94,23 @@ optimisation of logistics routing may potentially yield benefits." ← 一句话
 
 > 此库持续扩展。新增词必须给一个反例并在 commit 说明来源(哪篇被 AI 痕迹拦截)。
 
+### §5.1 数据冲突禁用 token(来自 Verified Data Library 冲突日志)
+
+`libraries/facts/asg-verified-data-library.json` 的 `deprecation_and_conflicts_log`
+是**机器强制点**(此前仅口头约定,framework-review P1-1)。正文出现以下任一
+**即 BLOCK**(asg-editorial-gate 检查 9 扫描):
+
+| 禁用 token | 正确写法 | 依据 |
+|---|---|---|
+| `6,000+`(指客户数) | `5,000+`(保守 canonical,见 ASG-SERVICE-001) | 冲突日志 #1 |
+| `Jason` | `Janson` | 冲突日志 #3 |
+| 把 `4.2M` 当累计 / 把 `5M+` 当单年 | 4.2M=2024 单年(ASG-TEAM-007);5M+=累计(ASG-TEAM-008) | 冲突日志 #2 |
+| `over 200` / `about 250`(团队) | `~200` / `a team of ~200`(ASG-TEAM-001 notes) | 锁定值 |
+| 单一 `4-6 days` 笼统时效 | 按市场分国家区间(ASG-LOGISTICS-002) | 锁定值 notes |
+
+> 该表随 Verified Library `deprecation_and_conflicts_log` + 各条 `notes` 的
+> "Always cite as…/Do not…" 同步扩充;新增冲突项一并登记至此。
+
 ---
 
 ## Section 6 | 数据呈现风格

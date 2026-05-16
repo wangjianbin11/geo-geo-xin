@@ -21,15 +21,22 @@ Envelope 是"一次调用",Dossier 是"一篇文章的全程档案"。Skill 既�
 ```
 data/runs/<article_id>/
   dossier.json              主档案(随流程累积)
-  00-filter.json            asg-strategic-filter 的 envelope
-  01-keyword.json           asg-keyword-researcher 的 envelope
-  02-draft.json             asg-seo-writer-v2 (Steps 1-19) 的 envelope
-  03-gate.json              asg-editorial-gate 的 envelope
-  04-meta.json              asg-seo-writer-v2 (Step 21 Meta) 的 envelope
-  05-voice.json             asg-voice-checker 的 envelope
-  06-publish.json           Step 23 打包 envelope
+  00-filter.json              asg-strategic-filter 的 envelope
+  01-keyword.json             asg-keyword-researcher 的 envelope
+  02-draft.json               asg-seo-writer-v2 (Steps 1-19) 的 envelope
+  03-gate-attempt{N}.json     asg-editorial-gate 的 envelope(每次评审一份;
+                              modify/blocked→重试产生 attempt2…,见 §4)
+  04-meta.json                asg-seo-writer-v2 (Step 21 Meta) 的 envelope;
+                              publish_package(meta variants)写入 dossier
+  05-voice.json               asg-voice-checker 的 envelope
   ...
 ```
+
+> **文件名契约(权威,以真实 run 为准)。** Editorial Gate 是带重试回路的检查,
+> 故按 `03-gate-attempt1.json` / `03-gate-attempt2.json` … 编号(N=评审轮次),
+> **不存在单一 `03-gate.json`**。Step 23「打包」在 v0.1 **不单独产 envelope**:
+> publish_package 由 04-meta 阶段直接写入 `dossier.publish_package`。若未来需要
+> 独立打包信封,约定文件名 `06-publish.json`(当前 worked example 不产出)。
 
 非文章类 Skill 用自己的 task id 目录:
 
@@ -57,7 +64,7 @@ data/runs/ASG-AUDIT-001/     asg-stock-auditor 一次性审计
       human_gate: true   ← 确认点 ② 标题 + 大纲锁定 (Step 14)
   → asg-editorial-gate (Step 20)
       读: dossier.draft + asg-publishing-gate.md + Libraries
-      写: 03-gate.json, dossier.gate_report
+      写: 03-gate-attempt{N}.json, dossier.gate_report
       status: ok(PASS) | modify(1-2 轻微) | blocked(≥3 或硬伤)
       human_gate: true   ← 确认点 ③ Editorial Gate 决定
   → asg-seo-writer-v2 (Step 21 Meta)

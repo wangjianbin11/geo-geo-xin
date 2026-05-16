@@ -7,7 +7,7 @@ step: 20
 human_gate: true
 enforced_rulebooks: [asg-publishing-gate, asg-content-constitution, asg-voice-bible, asg-risk-compliance, asg-geo-standards]
 reads_libraries: [facts, cases, sources, voices]
-emits: data/runs/<article_id>/03-gate.json
+emits: data/runs/<article_id>/03-gate-attempt{N}.json
 io_schema: ./io-schema.json
 ---
 

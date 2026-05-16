@@ -53,6 +53,13 @@ referenced_by: [asg-geo-benchmarker, asg-strategic-filter, asg-keyword-researche
 | Obsidian 真实文件夹 | 代码 | 谁写 | 命名 |
 |---|---|---|---|
 | `10-竞品情报库` | COMPETE | `asg-geo-benchmarker` 写回 | `COMP-YYYY-Www` |
+| `01-GEO市场分析` ⚠ | GEO | `asg-monthly-auditor` 写回月报 | `MONTH-YYYY-MM` |
+
+> ⚠ `01-GEO市场分析` 是 §2.3 登记的 `conforms:false` 待协调文件夹(前缀与
+> `01-销售获客` 重复,拟并入 `11-行业洞察`)。monthly-auditor 写回此处属**双重
+> 待协调**:文件夹合规化时,其 `report_path` 须随 `obsidian-folder-map.json`
+> 同步更新(同步契约见 Section 4)。它同时是 topics 库(`TOPIC-`)的投影源,
+> 故写回与投影共用此目录——重命名时两者一并迁移。
 
 `distribution` 类 Skill 的成稿按平台分发回 `内容输出库`(代码 CONTENT,无前缀):
 

@@ -69,7 +69,7 @@ status=ok(或可继续)时的下一步;**三类型差异**列标注 share(25)/re
 | 20 | quality-control | **Editorial Gate 强制审核** | asg-editorial-gate | draft + publishing-gate §A/§B + Libraries | gate_report(10 项 checks/decision) | ok(PASS) / modify(1–2 轻微,自动修复重跑) / blocked(任一 BLOCK 或 MODIFY≥3) / error | asg-seo-writer-v2(meta)（blocked→null) | **③ Editorial Gate 决定** | 阈值按 §A 类型(密度/链接/数据下限不同) | `03-gate-attempt1.json` → `03-gate-attempt2.json` |
 | 21 | production | Meta Description ×3 | asg-seo-writer-v2 | 成稿 + Performance(无则 no-history) | meta_variants[3] | ok / error | asg-voice-checker | — | 共有 | `04-meta.json` |
 | 22 | quality-control | Voice Checker 声音核查 | asg-voice-checker | 成稿 HTML + voice-bible | voice_report(5 项 checks) | ok(PASS) / flagged(FLAG,可继续) | Step 23 打包 | — | 共有(密度阈值按 voice-bible §2 类型) | `05-voice.json` |
-| 23 | publishing | Publish 工程化打包 | (打包步,无独立 Skill) | dossier.draft + publish_package | 发布包(HTML+Meta+canonical) | ok / error | Step 24 | — | 共有 | `06-publish.json`(layout 见 contract §2) |
+| 23 | publishing | Publish 工程化打包 | (打包步,无独立 Skill) | dossier.draft + publish_package | 发布包(HTML+Meta+canonical) | ok / error | Step 24 | — | 共有 | v0.1 不单独产 envelope;publish_package 经 04-meta 写入 dossier(见 contract §2) |
 | 24 | publishing | 平台分发(逐平台确认) | 分发 Skills(见下) | 发布包 + article_type + language | 各平台文案/脚本 | ok / error | Step 25 | **④ 逐平台分发确认** | pillar 长视频+5 平台 / share 短视频+Twitter thread / response 短视频+FAQ 拆解(§A「适配分发」) | `24a/24b/24c/24d-*.json` |
 | 24a | publishing | Facebook Page 改写 | asg-facebook-page | 发布包 | FB Page 帖 | ok | asg-platform-polisher | ④(对外发布前确认) | 共有 | `24a-facebook-page.json` |
 | 24b | publishing | Facebook Groups 改写(反 spam) | asg-facebook-groups | 发布包 | 社群友好帖(链接进评论区) | ok | asg-platform-polisher | ④ | 共有 | `24b-facebook-groups.json` |

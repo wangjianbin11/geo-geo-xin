@@ -12,8 +12,17 @@ Proves the skeleton is self-consistent, not paper:
      asg-publishing-gate.md (Single Source of Truth) and
      asg-editorial-gate/io-schema.json $defs (the mirror).
 
+SCOPE / NOT A QUALITY GATE: this is a CONTRACT regression gate. Green means
+the structure is self-consistent (envelopes, library-ref resolution,
+chaining, the SSoT param-table mirror). It does NOT execute the skills, does
+NOT judge content quality, and does NOT verify Gate 2 (density) / Gate 9
+(banned words / data-conflict tokens) / Gate 10 (dedup) were actually run on
+real prose — ASG-044's html is a placeholder string and still validates.
+"Green" != "the article is good". (framework-review P1-2)
+
 Exit 0 = all green. Exit 1 = at least one failure.
-Usage:  python3 tools/validate_pipeline.py [run_id ...]   (default: ASG-044)
+Usage:  python3 tools/validate_pipeline.py [run_id ...]
+        (no args = auto-discover every run under data/runs/)
 """
 import json, re, sys, glob, os, datetime
 
