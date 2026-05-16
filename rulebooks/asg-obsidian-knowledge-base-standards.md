@@ -1,7 +1,7 @@
 ---
 doc: asg-obsidian-knowledge-base-standards
 title: Obsidian 知识库规范
-status: v0.1
+status: v0.2
 authority: sub-law
 parent: asg-content-constitution
 last_updated: 2026-05-16
@@ -33,16 +33,53 @@ referenced_by: [asg-geo-benchmarker, asg-strategic-filter, asg-keyword-researche
 
 ## Section 2 | 目录映射(Obsidian → libraries/)
 
-| Obsidian 文件夹 | libraries/ 投影 | ID 前缀 |
-|---|---|---|
-| /00-企业DNA | facts/ | FACT- |
-| /09-客户案例库-F&Q | cases/ | CASE- |
-| /11-行业洞察 | sources/ | SOURCE- |
-| /01-销售获客(对话脱敏) | voices/ | VOICE- |
-| /01-GEO市场分析 | (阶段2) topics | TOPIC- |
-| /10-竞品情报库 | (benchmarker 写回) | COMP- |
+> 本表已按 Janson 提供的真实 Obsidian 知识库 `ASG-KB-FULL` 文件夹名校准
+> (源:janson-2026-05-16)。中文文件夹名 = 真实磁盘路径,逐字复制,不翻译、
+> 不臆造。**机器索引见 `libraries/obsidian-folder-map.json`**(对应人类索引
+> `libraries/obsidian-folder-map.md`),新增/重命名文件夹以该机器索引为准。
 
-新增 Obsidian 文件夹须在此表登记后才允许被 Skill 引用。
+### 2.1 核心投影(Skill 只读)
+
+| Obsidian 真实文件夹 | 代码 | libraries/ 投影 | ID 前缀 |
+|---|---|---|---|
+| `00-企业DNA` | DNA | `libraries/facts/` | `FACT-` |
+| `09-客户案例库-F&Q` | CASE | `libraries/cases/`(252 FAQ + 客户案例) | `CASE-` |
+| `11-行业洞察` | INSIGHT | `libraries/sources/` | `SOURCE-` |
+| `01-销售获客`(对话脱敏) | SALES | `libraries/voices/` | `VOICE-` |
+| `01-GEO市场分析` | GEO | `libraries/topics/`(阶段2 主题池) | `TOPIC-` |
+
+### 2.2 写回 / 产出物投影(非真实源数据)
+
+| Obsidian 真实文件夹 | 代码 | 谁写 | 命名 |
+|---|---|---|---|
+| `10-竞品情报库` | COMPETE | `asg-geo-benchmarker` 写回 | `COMP-YYYY-Www` |
+
+`distribution` 类 Skill 的成稿按平台分发回 `内容输出库`(代码 CONTENT,无前缀):
+
+| Obsidian 子文件夹 | 代码 | 产出 Skill |
+|---|---|---|
+| `内容输出库/Facebook` | CONTENT.FACEBOOK | `asg-facebook-page` / `asg-facebook-groups` |
+| `内容输出库/领英` | CONTENT.LINKEDIN | linkedin 分发 |
+| `内容输出库/推特` | CONTENT.TWITTER | twitter 分发 |
+| `内容输出库/YouTube` | CONTENT.YOUTUBE | `asg-short-video-scripter`(youtube 暂缓) |
+| `内容输出库/seo 谷歌文章` | CONTENT.SEO | `asg-seo-writer-v2` 成稿 |
+
+新增 Obsidian 文件夹须先登记到 `libraries/obsidian-folder-map.*` 并在此表
+反映后,才允许被 Skill 引用。
+
+### 2.3 待协调的已知缺口(known gaps to reconcile)
+
+下列文件夹**不符合命名规则**,机器索引中 `conforms:false`,Skill 引用前
+须人工确认目标路径稳定(详见 `obsidian-folder-map.md` §2.4):
+
+- `09-客户案例库-F&Q` 含 `&` → 应为 `09-客户案例库-FAQ`(投影源,优先重命名)。
+- `01-GEO市场分析` 与 `01-销售获客` 前缀重复,拟并入 `11-行业洞察`。
+- `内容输出库` 无数字前缀(建议 `12-内容输出库` 或保留);`内容输出库/seo 谷歌文章` 含空格。
+- `ip知识库` 刻意保持独立(例外保留);`asg 的销售教程` 含空格 + 无前缀;
+  `西哥有绝招_副本` 含 `副本`;`ASG_Content` 英文 + 无前缀(空目录)。
+
+文件夹一旦重命名为合规名,须**同步更新** `obsidian-folder-map.*` 与本表的
+`real_name`,且保持投影 `id` 稳定(同步契约见 Section 4)。
 
 ---
 
@@ -97,3 +134,4 @@ usage_count: 0          # 月度审计回写
 | 版本 | 日期 | 变更 |
 |---|---|---|
 | v0.1 | 2026-05-16 | 初版 6 Section。确立双仓边界 + 目录映射 + 同步契约 + benchmarker 写回。待 Janson 按真实 Obsidian 文件夹名校准 Section 2 映射表。 |
+| v0.2 | 2026-05-16 | Section 2 按 janson-2026-05-16 真实文件夹名校准(中文名为真实磁盘路径);新增 distribution 产出物投影与「待协调的已知缺口」;引入机器索引 `libraries/obsidian-folder-map.{md,json}` 为登记权威。 |

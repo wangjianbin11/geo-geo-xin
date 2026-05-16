@@ -1,0 +1,130 @@
+{
+  "doc": "obsidian-folder-map",
+  "schema_version": "2.0",
+  "verified": true,
+  "source": "janson-2026-05-16",
+  "vault_root": "/Users/apple/Documents/ASG-知识库/ASG-KB-FULL/",
+  "map_metadata": {
+    "last_updated": "2026-05-15",
+    "next_review": "2026-08-15",
+    "maintainer": "Knowledge Manager"
+  },
+  "folders": [
+    { "code": "DNA", "real_name": "00-企业DNA", "prefix": "00-", "moc": "00-企业DNA-MOC.md", "purpose": "公司根基、品牌、使命", "level": 1, "parent": null, "conforms": true, "issue": null },
+    { "code": "SALES", "real_name": "01-销售获客", "prefix": "01-", "moc": "01-销售获客-MOC.md", "purpose": "客户画像、获客、话术、邮件", "level": 1, "parent": null, "conforms": true, "issue": null },
+    { "code": "GEO", "real_name": "01-GEO市场分析", "prefix": "01-", "moc": null, "purpose": "美欧亚拉美市场分析", "level": 1, "parent": null, "conforms": false, "issue": "前缀 01- 与 01-销售获客 重复;无 MOC;拟并入 11-行业洞察" },
+    { "code": "SUPPLY", "real_name": "02-供应链与服务", "prefix": "02-", "moc": "02-供应链与服务-MOC.md", "purpose": "QC/物流/订单/付款", "level": 1, "parent": null, "conforms": true, "issue": null },
+    { "code": "BRAND", "real_name": "03-品牌与营销", "prefix": "03-", "moc": "03-品牌与营销-MOC.md", "purpose": "SEO/社媒/内容/Fiverr", "level": 1, "parent": null, "conforms": true, "issue": null },
+    { "code": "TEAM", "real_name": "04-团队管理", "prefix": "04-", "moc": "04-团队管理-MOC.md", "purpose": "制度/培训/考核", "level": 1, "parent": null, "conforms": true, "issue": null },
+    { "code": "STRATEGY", "real_name": "05-战略复盘", "prefix": "05-", "moc": "05-战略复盘-MOC.md", "purpose": "周复盘/月复盘/决策/项目", "level": 1, "parent": null, "conforms": true, "issue": null },
+    { "code": "AI", "real_name": "06-AI-Agent", "prefix": "06-", "moc": "06-AI-Agent-MOC.md", "purpose": "FAQ/Agent矩阵/Skills", "level": 1, "parent": null, "conforms": true, "issue": null },
+    { "code": "TEMPLATE", "real_name": "07-模板库", "prefix": "07-", "moc": "07-模板库-MOC.md", "purpose": "标准化文档模板", "level": 1, "parent": null, "conforms": true, "issue": null },
+    { "code": "CASE", "real_name": "09-客户案例库-F&Q", "prefix": "09-", "moc": "09-客户案例库-MOC.md", "purpose": "252个FAQ+客户案例", "level": 1, "parent": null, "conforms": false, "issue": "含特殊字符 '&',应为 09-客户案例库-FAQ" },
+    { "code": "COMPETE", "real_name": "10-竞品情报库", "prefix": "10-", "moc": "10-竞品情报库-MOC.md", "purpose": "竞品档案+对比", "level": 1, "parent": null, "conforms": true, "issue": null },
+    { "code": "INSIGHT", "real_name": "11-行业洞察", "prefix": "11-", "moc": "11-行业洞察-MOC.md", "purpose": "行业图谱/趋势/政策", "level": 1, "parent": null, "conforms": true, "issue": null },
+    { "code": "INBOX", "real_name": "99-Inbox", "prefix": "99-", "moc": "99-Inbox-MOC.md", "purpose": "快速捕获临时区", "level": 1, "parent": null, "conforms": true, "issue": null },
+    { "code": "CONTENT", "real_name": "内容输出库", "prefix": null, "moc": null, "purpose": "多平台内容分发", "level": 1, "parent": null, "conforms": false, "issue": "无数字前缀,建议 12-内容输出库 或保留" },
+    { "code": "IP", "real_name": "ip知识库", "prefix": null, "moc": null, "purpose": "Janson个人品牌知识体系(独立)", "level": 1, "parent": null, "conforms": false, "issue": "无前缀;刻意保持独立,例外保留" },
+    { "code": "TRAINING", "real_name": "asg 的销售教程", "prefix": null, "moc": null, "purpose": "销售培训材料", "level": 1, "parent": null, "conforms": false, "issue": "含空格 + 无前缀" },
+    { "code": "XI_GE", "real_name": "西哥有绝招_副本", "prefix": null, "moc": null, "purpose": "内容素材(待整理)", "level": 1, "parent": null, "conforms": false, "issue": "含 '副本' + 无前缀" },
+    { "code": "ASG_C", "real_name": "ASG_Content", "prefix": null, "moc": null, "purpose": "空目录(待定用途)", "level": 1, "parent": null, "conforms": false, "issue": "英文 + 无前缀,空目录待定用途" },
+
+    { "code": "SALES.ACQUIRE", "real_name": "获客系统", "prefix": null, "moc": null, "purpose": "获客系统", "level": 2, "parent": "SALES", "conforms": true, "issue": null },
+    { "code": "SALES.PERSONA", "real_name": "客户画像", "prefix": null, "moc": null, "purpose": "7类客户画像", "level": 2, "parent": "SALES", "conforms": true, "issue": null },
+    { "code": "SALES.EMAIL", "real_name": "邮件模板", "prefix": null, "moc": null, "purpose": "邮件模板", "level": 2, "parent": "SALES", "conforms": true, "issue": null },
+    { "code": "SALES.SCRIPT", "real_name": "话术库", "prefix": null, "moc": null, "purpose": "话术库", "level": 2, "parent": "SALES", "conforms": true, "issue": null },
+
+    { "code": "SUPPLY.QC", "real_name": "QC质检", "prefix": null, "moc": null, "purpose": "QC质检", "level": 2, "parent": "SUPPLY", "conforms": true, "issue": null },
+    { "code": "SUPPLY.PAYMENT", "real_name": "付款结算", "prefix": null, "moc": null, "purpose": "付款结算", "level": 2, "parent": "SUPPLY", "conforms": true, "issue": null },
+    { "code": "SUPPLY.LOGISTICS", "real_name": "物流方案", "prefix": null, "moc": null, "purpose": "物流方案", "level": 2, "parent": "SUPPLY", "conforms": true, "issue": null },
+    { "code": "SUPPLY.ORDER", "real_name": "订单处理", "prefix": null, "moc": null, "purpose": "订单处理", "level": 2, "parent": "SUPPLY", "conforms": true, "issue": null },
+
+    { "code": "BRAND.FIVERR", "real_name": "Fiverr推广", "prefix": null, "moc": null, "purpose": "Fiverr推广", "level": 2, "parent": "BRAND", "conforms": true, "issue": null },
+    { "code": "BRAND.CONTENT", "real_name": "内容策略", "prefix": null, "moc": null, "purpose": "内容策略", "level": 2, "parent": "BRAND", "conforms": true, "issue": null },
+    { "code": "BRAND.SEO", "real_name": "SEO", "prefix": null, "moc": null, "purpose": "SEO", "level": 2, "parent": "BRAND", "conforms": true, "issue": null },
+    { "code": "BRAND.SOCIAL", "real_name": "社交媒体", "prefix": null, "moc": null, "purpose": "社交媒体", "level": 2, "parent": "BRAND", "conforms": true, "issue": null },
+    { "code": "BRAND.ASSETS", "real_name": "内容素材", "prefix": null, "moc": null, "purpose": "内容素材", "level": 2, "parent": "BRAND", "conforms": true, "issue": null },
+
+    { "code": "TEAM.KPI", "real_name": "绩效考核", "prefix": null, "moc": null, "purpose": "绩效考核", "level": 2, "parent": "TEAM", "conforms": true, "issue": null },
+    { "code": "TEAM.POLICY", "real_name": "制度流程", "prefix": null, "moc": null, "purpose": "制度流程", "level": 2, "parent": "TEAM", "conforms": true, "issue": null },
+    { "code": "TEAM.MARKET", "real_name": "市场专项", "prefix": null, "moc": null, "purpose": "市场专项", "level": 2, "parent": "TEAM", "conforms": true, "issue": null },
+    { "code": "TEAM.TRAIN", "real_name": "培训体系", "prefix": null, "moc": null, "purpose": "培训体系", "level": 2, "parent": "TEAM", "conforms": true, "issue": null },
+
+    { "code": "STRATEGY.DECISION", "real_name": "决策记录", "prefix": null, "moc": null, "purpose": "决策记录", "level": 2, "parent": "STRATEGY", "conforms": true, "issue": null },
+    { "code": "STRATEGY.WEEKLY", "real_name": "周复盘", "prefix": null, "moc": null, "purpose": "周复盘", "level": 2, "parent": "STRATEGY", "conforms": true, "issue": null },
+    { "code": "STRATEGY.MONTHLY", "real_name": "月复盘", "prefix": null, "moc": null, "purpose": "月复盘", "level": 2, "parent": "STRATEGY", "conforms": true, "issue": null },
+    { "code": "STRATEGY.PROJECT", "real_name": "项目档案", "prefix": null, "moc": null, "purpose": "项目档案", "level": 2, "parent": "STRATEGY", "conforms": true, "issue": null },
+
+    { "code": "AI.SKILLS", "real_name": "Skills配置", "prefix": null, "moc": null, "purpose": "Skills配置", "level": 2, "parent": "AI", "conforms": true, "issue": null },
+    { "code": "AI.FAQ", "real_name": "FAQ知识源", "prefix": null, "moc": null, "purpose": "FAQ知识源", "level": 2, "parent": "AI", "conforms": true, "issue": null },
+    { "code": "AI.MATRIX", "real_name": "Agent矩阵", "prefix": null, "moc": null, "purpose": "Agent矩阵", "level": 2, "parent": "AI", "conforms": true, "issue": null },
+
+    { "code": "CONTENT.TWITTER", "real_name": "推特", "prefix": null, "moc": null, "purpose": "推特内容分发", "level": 2, "parent": "CONTENT", "conforms": true, "issue": null },
+    { "code": "CONTENT.SUBSTACK", "real_name": "substack", "prefix": null, "moc": null, "purpose": "substack内容分发", "level": 2, "parent": "CONTENT", "conforms": true, "issue": null },
+    { "code": "CONTENT.MEDIUM", "real_name": "medium", "prefix": null, "moc": null, "purpose": "medium内容分发", "level": 2, "parent": "CONTENT", "conforms": true, "issue": null },
+    { "code": "CONTENT.YOUTUBE", "real_name": "YouTube", "prefix": null, "moc": null, "purpose": "YouTube内容分发", "level": 2, "parent": "CONTENT", "conforms": true, "issue": null },
+    { "code": "CONTENT.LINKEDIN", "real_name": "领英", "prefix": null, "moc": null, "purpose": "领英内容分发", "level": 2, "parent": "CONTENT", "conforms": true, "issue": null },
+    { "code": "CONTENT.SEO", "real_name": "seo 谷歌文章", "prefix": null, "moc": null, "purpose": "SEO 谷歌文章分发", "level": 2, "parent": "CONTENT", "conforms": false, "issue": "二级文件夹名含空格" },
+    { "code": "CONTENT.FACEBOOK", "real_name": "Facebook", "prefix": null, "moc": null, "purpose": "Facebook内容分发", "level": 2, "parent": "CONTENT", "conforms": true, "issue": null },
+
+    { "code": "IP.BASE", "real_name": "01-AI自带知识库（基础认知层）", "prefix": "01-", "moc": null, "purpose": "基础认知层", "level": 2, "parent": "IP", "conforms": false, "issue": "二级文件夹有前缀且含中文括号(IP 库刻意例外)" },
+    { "code": "IP.INDUSTRY", "real_name": "02-行业知识库（专业垂类层）", "prefix": "02-", "moc": null, "purpose": "专业垂类层", "level": 2, "parent": "IP", "conforms": false, "issue": "二级文件夹有前缀且含中文括号(IP 库刻意例外)" },
+    { "code": "IP.BRAND", "real_name": "03-IP知识库（个人品牌层）", "prefix": "03-", "moc": null, "purpose": "个人品牌层", "level": 2, "parent": "IP", "conforms": false, "issue": "二级文件夹有前缀且含中文括号(IP 库刻意例外)" },
+    { "code": "IP.REALTIME", "real_name": "04-联网知识库（实时信息层）", "prefix": "04-", "moc": null, "purpose": "实时信息层", "level": 2, "parent": "IP", "conforms": false, "issue": "二级文件夹有前缀且含中文括号(IP 库刻意例外)" }
+  ],
+  "root_loose_files": [
+    { "file": "HOME.md", "action": "keep root", "status": "done" },
+    { "file": "00-任务一-全库结构诊断与升级方案.md", "action": "move -> 00-企业DNA/", "status": "done" },
+    { "file": "ASG销售流程的sop...(1)_副本.docx", "action": "move -> 01-销售获客/, rename ASG销售流程SOP-七大节点执行策略指南.md", "status": "pending-convert" },
+    { "file": "...(1)_副本2.docx", "action": "move -> ...-v2.md", "status": "pending-convert" },
+    { "file": "dropshipping 行业的知识库 (1).md", "action": "move -> 11-行业洞察/Dropshipping行业知识库.md", "status": "pending" },
+    { "file": "行业dropshipping 补充 (2).md", "action": "move -> 11-行业洞察/Dropshipping行业知识补充.md", "status": "pending" },
+    { "file": "旧网站的知识库更新.md", "action": "move -> 00-企业DNA/旧网站知识库迁移记录.md", "status": "pending" },
+    { "file": "未命名 2.base", "action": "move -> 07-模板库/ 或删除", "status": "pending-confirm" }
+  ],
+  "naming_rules": {
+    "folder": "{两位数字}-{中文名}",
+    "ranges": { "00": "core", "01-06": "business", "07": "tools", "08": "reserved(审计仪表盘待建)", "09-11": "智库", "99": "临时" },
+    "level1_must_have_numeric_prefix": true,
+    "level2_pure_chinese_no_prefix": true,
+    "no_spaces": "use -",
+    "no_special_chars": "& -> and, drop brackets",
+    "file": "{类别前缀}-{简明标题}.md",
+    "moc": "{文件夹名}-MOC.md",
+    "no_copy_markers": "no 副本/初版 (use v2/v3)",
+    "template_prefix": "模板-"
+  },
+  "known_violations": [
+    "09-客户案例库-F&Q 含 '&' -> 应为 09-客户案例库-FAQ",
+    "内容输出库 无前缀 -> 12-内容输出库 或保留",
+    "ip知识库 保持独立(刻意例外)",
+    "asg 的销售教程 含空格 / 无前缀",
+    "西哥有绝招_副本 含 副本",
+    "ASG_Content 英文 / 无前缀(空目录)",
+    "01-GEO市场分析 与 01-销售获客 前缀重复(拟并入 11-行业洞察)"
+  ],
+  "projection": [
+    { "asg_content_os": "libraries/facts", "obsidian_code": "DNA", "obsidian_real": "00-企业DNA", "id_prefix": "FACT-", "note": "ASG 锚定数据" },
+    { "asg_content_os": "libraries/cases", "obsidian_code": "CASE", "obsidian_real": "09-客户案例库-F&Q", "id_prefix": "CASE-", "note": "252 FAQ + 客户案例" },
+    { "asg_content_os": "libraries/sources", "obsidian_code": "INSIGHT", "obsidian_real": "11-行业洞察", "id_prefix": "SOURCE-", "note": "外部权威源 / 行业洞察" },
+    { "asg_content_os": "libraries/voices", "obsidian_code": "SALES", "obsidian_real": "01-销售获客", "id_prefix": "VOICE-", "note": "客户原话(脱敏自销售获客对话)" },
+    { "asg_content_os": "libraries/topics", "obsidian_code": "GEO", "obsidian_real": "01-GEO市场分析", "id_prefix": "TOPIC-", "note": "阶段2 主题池" },
+    { "asg_content_os": "benchmarker-COMP-writeback", "obsidian_code": "COMPETE", "obsidian_real": "10-竞品情报库", "id_prefix": "COMP-", "note": "asg-geo-benchmarker 周报写回(产出物,非真实源)" },
+    {
+      "asg_content_os": "distribution-outputs",
+      "obsidian_code": "CONTENT",
+      "obsidian_real": "内容输出库",
+      "id_prefix": null,
+      "note": "distribution skill 输出按平台分发到子文件夹",
+      "subfolders": [
+        { "obsidian_real": "Facebook", "obsidian_code": "CONTENT.FACEBOOK", "skill": "asg-facebook-page / asg-facebook-groups" },
+        { "obsidian_real": "领英", "obsidian_code": "CONTENT.LINKEDIN", "skill": "linkedin distribution" },
+        { "obsidian_real": "推特", "obsidian_code": "CONTENT.TWITTER", "skill": "twitter distribution" },
+        { "obsidian_real": "YouTube", "obsidian_code": "CONTENT.YOUTUBE", "skill": "asg-short-video-scripter (deferred youtube)" },
+        { "obsidian_real": "substack", "obsidian_code": "CONTENT.SUBSTACK", "skill": "substack distribution" },
+        { "obsidian_real": "medium", "obsidian_code": "CONTENT.MEDIUM", "skill": "medium distribution" },
+        { "obsidian_real": "seo 谷歌文章", "obsidian_code": "CONTENT.SEO", "skill": "asg-seo-writer-v2 output" }
+      ]
+    }
+  ]
+}

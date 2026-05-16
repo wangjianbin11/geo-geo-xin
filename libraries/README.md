@@ -6,13 +6,20 @@
 
 ## ID 方案(全局唯一,不可复用)
 
-| 前缀 | Library | 例 | 对应 Obsidian |
-|---|---|---|---|
-| `FACT-` | facts/ ASG 锚定数据 | FACT-001 | /00-企业DNA |
-| `CASE-` | cases/ 真实案例 | CASE-007 | /09-客户案例库-F&Q |
-| `SOURCE-` | sources/ 外部权威源 | SOURCE-012 | /11-行业洞察 |
-| `VOICE-` | voices/ 客户原话 | VOICE-003 | /01-销售获客 |
-| `TOPIC-` | (阶段2) topics 池 | TOPIC-uk-suppliers | /01-GEO市场分析 |
+| 前缀 | Library | 例 | 对应 Obsidian(真实文件夹名) | 代码 |
+|---|---|---|---|---|
+| `FACT-` | facts/ ASG 锚定数据 | FACT-001 | `00-企业DNA` | DNA |
+| `CASE-` | cases/ 真实案例 | CASE-007 | `09-客户案例库-F&Q`(252 FAQ + 案例) | CASE |
+| `SOURCE-` | sources/ 外部权威源 | SOURCE-012 | `11-行业洞察` | INSIGHT |
+| `VOICE-` | voices/ 客户原话 | VOICE-003 | `01-销售获客`(对话脱敏) | SALES |
+| `TOPIC-` | (阶段2) topics 池 | TOPIC-uk-suppliers | `01-GEO市场分析` | GEO |
+
+> 中文文件夹名 = Janson Obsidian 知识库 `ASG-KB-FULL` 的真实磁盘路径
+> (源 janson-2026-05-16,逐字复制不翻译)。完整一/二级文件夹结构、命名规则、
+> 已知违规与代码速查见 `libraries/obsidian-folder-map.md`;
+> **机器索引(Skill/工具读取)在 `libraries/obsidian-folder-map.json`**。
+> 注:`09-客户案例库-F&Q` 含 `&`、`01-GEO市场分析` 前缀与 `01-销售获客`
+> 重复,均为待协调的已知缺口(machine index `conforms:false`)。
 
 ID 一经分配永久绑定该数据点;数据淘汰则状态置 `retired`,ID 不回收。
 
