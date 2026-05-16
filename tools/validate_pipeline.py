@@ -151,6 +151,42 @@ def validate_dossier(run):
         check(r in LIB_IDS, f"dossier.draft asg_data_ref '{r}' RESOLVES")
 
 
+def validate_standalone(run):
+    """Bypass/utility runs (benchmarker, stock-auditor, keyword fixture) emit a
+    single non-numbered envelope (audit.json / keyword.json / benchmark.json)
+    rather than a numbered main chain. Validate envelope conformance + ref
+    resolution, skip chain/ordering logic."""
+    rundir = os.path.join(ROOT, "data", "runs", run)
+    files = sorted(p for p in glob.glob(os.path.join(rundir, "*.json"))
+                   if os.path.basename(p) != "dossier.json"
+                   and not re.match(r"^[0-9]", os.path.basename(p)))
+    for fp in files:
+        rel = os.path.relpath(fp, ROOT)
+        env = json.load(open(fp, encoding="utf-8"))
+        print(f"\n[{rel}] (standalone)")
+        validate_envelope(fp, env)
+        ns = env.get("next_skill")
+        check(ns in (None, "null") or ns in IO_SCHEMA,
+              f"{run}: standalone next_skill is null or a registered skill ({ns})")
+    return files
+
+
+def discover_runs():
+    base = os.path.join(ROOT, "data", "runs")
+    out = []
+    for d in sorted(os.listdir(base)):
+        p = os.path.join(base, d)
+        if not os.path.isdir(p):
+            continue
+        chained = bool(glob.glob(os.path.join(p, "[0-9]*.json")))
+        standalone = [f for f in glob.glob(os.path.join(p, "*.json"))
+                      if os.path.basename(f) != "dossier.json"
+                      and not re.match(r"^[0-9]", os.path.basename(f))]
+        if chained or standalone:
+            out.append((d, "chain" if chained else "standalone"))
+    return out
+
+
 def validate_param_table_consistency():
     print("\n[cross-file: Article Type Parameter Table SSoT]")
     defs = load("skills/quality-control/asg-editorial-gate/io-schema.json")["$defs"]["article_type_params"]
@@ -194,13 +230,24 @@ def validate_skill_schemas():
 
 
 def main():
-    runs = sys.argv[1:] or ["ASG-044"]
+    if len(sys.argv) > 1:
+        runs = [(r, None) for r in sys.argv[1:]]
+    else:
+        runs = discover_runs()  # auto-discover every run dir, classified
     print(f"Library ID universe: {len(LIB_IDS)} ids loaded "
-          f"| {len(IO_SCHEMA)} skills registered\n" + "=" * 64)
-    for run in runs:
-        print(f"\n### RUN {run} " + "#" * 40)
-        validate_chain(run)
-        validate_dossier(run)
+          f"| {len(IO_SCHEMA)} skills registered "
+          f"| {len(runs)} runs\n" + "=" * 64)
+    for run, kind in runs:
+        # explicit CLI arg with unknown kind: detect from disk
+        if kind is None:
+            p = os.path.join(ROOT, "data", "runs", run)
+            kind = "chain" if glob.glob(os.path.join(p, "[0-9]*.json")) else "standalone"
+        print(f"\n### RUN {run} [{kind}] " + "#" * 32)
+        if kind == "chain":
+            validate_chain(run)
+            validate_dossier(run)
+        else:
+            validate_standalone(run)
     validate_skill_schemas()
     validate_param_table_consistency()
     print("\n" + "=" * 64)

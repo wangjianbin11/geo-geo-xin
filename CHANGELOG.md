@@ -2,6 +2,32 @@
 
 所有版本变更记录于此。版本语义见方案第 10.4 节:初版均为 v0.1(能用,不完美)。
 
+## [Unreleased] — 真实数据集成 (2026-05-16, Janson 数据)
+
+> 里程碑:从"骨架 + 种子"进入"真实数据驱动"。Janson 提供 GSC 导出 +
+> 3,625 关键词语料 + 真实 Obsidian 文件夹映射。多 agent team 并行处理,中心化集成。
+
+### Added (real data)
+
+- `tools/xlsx_to_csv.py` + `data/sources/`(原始 xlsx + 溯源 README)+
+  `data/gsc/`(97 页/952 查询/日/国家/设备)+ `data/keywords/`(3,625 关键词)。
+- `data/runs/ASG-AUDIT-001/`(真实存量审计:98 页 KEEP27/UPGRADE26/REWRITE31/
+  KILL14)+ `data/articles-stock-audit.csv` —— **阶段 1 验收交付物**。
+- `libraries/topics/topics-pool.{json,md}` —— 占位替换为 **42 个真实 Topic**
+  (从语料筛选,verified:true / derived:true,P0=3/P1=18/P2=19/P3=2)。
+- `data/runs/ASG-KW-001/keyword.json` —— 真实 keyword-researcher 输入 fixture。
+- `libraries/obsidian-folder-map.{md,json}` —— 真实 Obsidian 文件夹机器索引;
+  `asg-obsidian-knowledge-base-standards.md` 校准至 v0.2(真实文件夹名)。
+
+### Changed (real data)
+
+- `skills/utility/asg-stock-auditor/io-schema.json` —— input 改 `oneOf`:
+  article-list 模式 | **gsc-source 模式**(真实阶段 1 路径);audited item
+  扩充真实 GSC 字段。修复 Agent 反馈的契约缺口。
+- `tools/validate_pipeline.py` —— 自动发现所有 run;新增 standalone 旁路产物
+  校验;**388/388 全绿**(覆盖 ASG-044 链 + ASG-AUDIT-001 + ASG-KW-001)。
+- `.gitignore` 新增(__pycache__ / tmp_*)。
+
 ## [Unreleased] — 阶段 1+2 核心骨架 (2026-05-16)
 
 ### Added

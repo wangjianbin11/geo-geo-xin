@@ -1,0 +1,10 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Scratch / agent temp
+tmp_*.py
+tmp_*.json
+tools/_gen_*.py
+.DS_Store

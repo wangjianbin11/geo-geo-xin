@@ -18,12 +18,14 @@ io_schema: ./io-schema.json
 ## 2. 触发
 v2 骨架建成后、阶段 1 收尾时,一次性运行。
 
-## 3. 输入(io-schema.json#input)
-`articles[]`:每篇 {ref(#37),url,primary_kw}。可选 `gsc_data`(Janson 接 GSC
-导出:每篇 clicks/impressions/position)、`ahrefs_data`、`ai_citation_manual[]`
-(人工核查:Perplexity/AI Overview 是否引用)、`inquiry_attribution[]`(Janson
-标注:哪几篇带来过询盘)。
-**无 GSC 也能跑**(基础模式:仅 Google 排名 + 人工 AI 核查),但 output.mode 标 basic。
+## 3. 输入(io-schema.json#input,两种模式 oneOf)
+- **article-list 模式**:`articles[]` 每篇 {ref(#37),url,primary_kw};可选
+  `gsc_data` / `ahrefs_data` / `ai_citation_manual[]` / `inquiry_attribution[]`。
+- **gsc-source 模式(真实阶段 1 路径)**:`{gsc_source, pages_csv, queries_csv?,
+  period}` —— 直接喂 GSC 导出,审计真实索引到的页面全集(不需手列文章)。
+  实战见 `data/runs/ASG-AUDIT-001/`(98 页真实审计)。
+**无 AI 引用维度也能跑**(GSC 无此维度):`ai_cited` 置 null,output.mode 标
+`basic`,envelope.status 标 `flagged`,提示 KILL 前需人工核 AI 引用。
 
 ## 4. 核心逻辑
 对每篇综合:当前主词排名、Featured Snippet 状态、AI 引用情况、询盘归因 →

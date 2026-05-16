@@ -7,28 +7,47 @@
     "skill": { "const": "asg-stock-auditor" },
     "article_id": { "type": "string", "pattern": "^ASG-AUDIT-[0-9]{3,}$", "description": "Override: auditor uses audit task id, e.g. ASG-AUDIT-001" },
     "input": {
-      "type": "object",
-      "required": ["articles"],
-      "additionalProperties": false,
-      "properties": {
-        "articles": {
-          "type": "array",
-          "minItems": 1,
-          "items": {
-            "type": "object",
-            "required": ["ref", "url", "primary_kw"],
-            "properties": {
-              "ref": { "type": "string", "description": "e.g. #37" },
-              "url": { "type": "string", "format": "uri" },
-              "primary_kw": { "type": "string" }
-            }
+      "description": "Two input modes. article-list: a hand-fed list of articles (+ optional GSC/Ahrefs/AI/inquiry data). gsc-source: a raw GSC export to audit the real indexed page set (the real Phase-1 path; ai_citation absent -> output.mode=basic).",
+      "oneOf": [
+        {
+          "type": "object",
+          "title": "article-list mode",
+          "required": ["articles"],
+          "additionalProperties": false,
+          "properties": {
+            "articles": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "object",
+                "required": ["ref", "url", "primary_kw"],
+                "properties": {
+                  "ref": { "type": "string", "description": "e.g. #37" },
+                  "url": { "type": "string", "format": "uri" },
+                  "primary_kw": { "type": "string" }
+                }
+              }
+            },
+            "gsc_data": { "type": ["object", "null"], "description": "{ '#37': {clicks,impressions,position} }" },
+            "ahrefs_data": { "type": ["object", "null"] },
+            "ai_citation_manual": { "type": "array", "items": { "type": "object", "properties": { "ref": { "type": "string" }, "cited": { "type": "boolean" }, "engine": { "type": "string" } } } },
+            "inquiry_attribution": { "type": "array", "items": { "type": "string", "description": "article refs that produced inquiries" } }
           }
         },
-        "gsc_data": { "type": ["object", "null"], "description": "{ '#37': {clicks,impressions,position} }" },
-        "ahrefs_data": { "type": ["object", "null"] },
-        "ai_citation_manual": { "type": "array", "items": { "type": "object", "properties": { "ref": { "type": "string" }, "cited": { "type": "boolean" }, "engine": { "type": "string" } } } },
-        "inquiry_attribution": { "type": "array", "items": { "type": "string", "description": "article refs that produced inquiries" } }
-      }
+        {
+          "type": "object",
+          "title": "gsc-source mode",
+          "required": ["gsc_source", "pages_csv"],
+          "additionalProperties": false,
+          "properties": {
+            "gsc_source": { "type": "string", "description": "raw GSC export path, e.g. data/sources/gsc-2026-05-16.xlsx" },
+            "pages_csv": { "type": "string", "description": "extracted pages CSV, e.g. data/gsc/gsc_pages.csv" },
+            "queries_csv": { "type": ["string", "null"], "description": "optional extracted queries CSV for topic_gaps" },
+            "period": { "type": "string", "description": "GSC date range, e.g. 2026-02-15..2026-05-16" },
+            "ai_citation_manual": { "type": "array", "items": { "type": "object", "properties": { "ref": { "type": "string" }, "cited": { "type": "boolean" }, "engine": { "type": "string" } } } }
+          }
+        }
+      ]
     },
     "output": {
       "type": "object",
@@ -43,13 +62,21 @@
             "required": ["ref", "recommendation", "priority"],
             "properties": {
               "ref": { "type": "string" },
+              "url": { "type": ["string", "null"] },
+              "page_type": { "type": ["string", "null"], "enum": ["article", "product", "home", "category", "system", null] },
+              "clicks": { "type": ["integer", "null"] },
+              "impressions": { "type": ["integer", "null"] },
+              "ctr": { "type": ["number", "null"] },
+              "position": { "type": ["number", "null"] },
               "rank": { "type": ["integer", "null"] },
               "featured_snippet": { "type": ["boolean", "null"] },
               "ai_cited": { "type": ["boolean", "null"] },
               "inquiry": { "type": "boolean", "default": false },
               "recommendation": { "type": "string", "enum": ["KEEP", "UPGRADE", "REWRITE", "KILL"] },
               "priority": { "type": "string", "enum": ["P0", "P1", "P2", "P3"] },
-              "cluster": { "type": ["string", "null"] }
+              "cluster": { "type": ["string", "null"] },
+              "reason": { "type": ["string", "null"] },
+              "derived": { "type": "boolean", "default": true }
             }
           }
         },

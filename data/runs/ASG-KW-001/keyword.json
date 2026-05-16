@@ -1,0 +1,106 @@
+{
+  "schema_version": "2.0",
+  "skill": "asg-keyword-researcher",
+  "skill_version": "0.1.0",
+  "run_id": "run-ASG-045-2026-05-16",
+  "article_id": "ASG-045",
+  "stage": "pre-production",
+  "timestamp": "2026-05-16T11:20:00Z",
+  "status": "ok",
+  "next_skill": "asg-seo-writer-v2",
+  "human_gate": false,
+  "library_refs": ["TOPIC-ecommerce-platform-for-dropshipping"],
+  "input": {
+    "filter_report": {
+      "decision": "GO",
+      "recommended_article_type": "pillar",
+      "cluster": "general"
+    },
+    "external_data": {
+      "primary_candidates": [
+        { "term": "ecommerce platform for dropshipping", "kd": 17.0, "volume": 1600, "cpc": 0.0, "intent": "commercial" },
+        { "term": "best dropshipping platform", "kd": 30.0, "volume": 170, "cpc": 3.92, "intent": "commercial" },
+        { "term": "best dropshipping platforms", "kd": 24.0, "volume": 110, "cpc": 3.39, "intent": "commercial" },
+        { "term": "free ecommerce platforms for dropshipping", "kd": 16.0, "volume": 140, "cpc": 0.0, "intent": "commercial" },
+        { "term": "shopify dropshipping platform", "kd": 40.0, "volume": 210, "cpc": 5.27, "intent": "transactional" },
+        { "term": "ecommerce dropshipping", "kd": 50.0, "volume": 1000, "cpc": 2.44, "intent": "informational" }
+      ],
+      "long_tail": [
+        { "term": "free ecommerce platforms for dropshipping", "kd": 16.0, "volume": 140, "cpc": 0.0, "intent": "commercial" },
+        { "term": "best platforms for scaling a dropshipping business in the us", "kd": 13.0, "volume": 40, "cpc": 0.0, "intent": "commercial" }
+      ],
+      "cooccurrence": [
+        "shopify dropshipping",
+        "dropshipping suppliers",
+        "dropshipping store",
+        "dropshipping website builder",
+        "dropshipping business",
+        "best dropshipping niches",
+        "best dropshipping products 2025",
+        "ecommerce dropshipping"
+      ],
+      "competitor_urls": []
+    }
+  },
+  "output": {
+    "mode": "full",
+    "primary_keyword": {
+      "term": "ecommerce platform for dropshipping",
+      "priority": 95,
+      "pool_status": "already-active",
+      "kd": 17.0,
+      "volume": 1600,
+      "cpc": 0.0,
+      "intent": "commercial",
+      "estimated": false
+    },
+    "density_plan": {
+      "article_type": "pillar",
+      "primary_kw_density": "1.0-1.5%",
+      "cooccur_density": "0.5-1.0%"
+    },
+    "seo_placement": ["title-front", "h1", "url-slug", "meta-early", "first-100-words", ">=2 H2/H3", "image-alt"],
+    "geo_placement": ["answer-capsule", "faq-schema", "comparison-table", "step-list"],
+    "cooccurrence_terms": [
+      "shopify dropshipping",
+      "dropshipping suppliers",
+      "dropshipping store",
+      "dropshipping website builder",
+      "dropshipping business",
+      "best dropshipping niches",
+      "best dropshipping products 2025",
+      "ecommerce dropshipping"
+    ],
+    "selected_keywords": [
+      { "term": "ecommerce platform for dropshipping", "kd": 17.0, "volume": 1600, "cpc": 0.0, "intent": "commercial", "estimated": false },
+      { "term": "best dropshipping platform", "kd": 30.0, "volume": 170, "cpc": 3.92, "intent": "commercial", "estimated": false },
+      { "term": "best dropshipping platforms", "kd": 24.0, "volume": 110, "cpc": 3.39, "intent": "commercial", "estimated": false },
+      { "term": "free ecommerce platforms for dropshipping", "kd": 16.0, "volume": 140, "cpc": 0.0, "intent": "commercial", "estimated": false },
+      { "term": "shopify dropshipping platform", "kd": 40.0, "volume": 210, "cpc": 5.27, "intent": "transactional", "estimated": false }
+    ],
+    "cluster_relations": {
+      "cluster": "general",
+      "internal_link_recommendations": [
+        "where-to-best-ecommerce-platform-for-dropshipping",
+        "the-top-10-dropshipping-suppliers-and-platforms",
+        "how-does-it-work-bigcommerce-dropshipping",
+        "can-i-free-dropshipping-website-builder"
+      ],
+      "future_expansion": [
+        "best dropshipping platforms 2025",
+        "free dropshipping platform comparison",
+        "shopify vs bigcommerce for dropshipping"
+      ]
+    }
+  },
+  "audit": {
+    "warnings": [
+      "Data is REAL: primary_keyword + selected_keywords + candidates carry verbatim metrics from Janson's keyword-corpus.csv (3,625 rows, exported 2026-05-16); not estimated. pool_status=already-active because gsc_pages.csv has a clearly-covering page (where-to-best-ecommerce-platform-for-dropshipping) — Filter/Auditor should treat ASG-045 as a refresh/upgrade of that page, not a net-new article.",
+      "cluster='general' carried through from topics-pool.json TOPIC-ecommerce-platform-for-dropshipping (term has no UK/jewelry/agent anchor); internal_link_recommendations are real gsc_pages slugs in the same platform/supplier theme.",
+      "competitor_urls empty: Janson supplied no competitor SERP export for this term."
+    ],
+    "errors": [],
+    "rulebook_refs": ["asg-publishing-gate.md#A"],
+    "duration_ms": null
+  }
+}
